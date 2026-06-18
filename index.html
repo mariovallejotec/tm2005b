@@ -144,36 +144,26 @@
     <div class="acc-body">
       <p class="lead"><b>Horario:</b> martes, miércoles y viernes de 3 a 7 en el estudio (4 h); lunes y jueves de 5 a 7 en las computadoras (2 h). 16 h por semana · 25 clases en 5 semanas · del 10 de agosto al 11 de septiembre de 2026.</p>
       <p class="lead"><b>Reparto Mario / Enrique:</b> con los botones de arriba del calendario asignas un día de la semana completo a uno de los dos; con el selector de cada clase lo ajustas individualmente. El balance de arriba se calcula por horas.</p>
-      <p class="lead"><b>Impartición de los temas (acordado con Enrique):</b> todos los temas se ven pero de forma superficial (por ejemplo, sin necesariamente abrir el software o construir algo). El mayor énfasis de la clase está en lo que se relaciona con el proyecto (el reto).</p>
+      <p class="lead"><b>Impartición de los temas:</b> se acordó que todos los temas se vean pero de forma superficial (por ejemplo, sin necesariamente abrir el software o construir algo). El mayor énfasis de la clase está en lo que se relaciona con el proyecto (el reto).</p>
     </div>
   </div>
 
-  <!-- EL RETO (acordado con Enrique · junta 18 jun 2026) -->
-  <div class="acc open">
+  <!-- EL RETO -->
+  <div class="acc">
     <div class="acc-head"><h2>El Reto · concierto con Max for Live</h2><span class="chev">▶</span></div>
     <div class="acc-body">
-      <p class="lead">Acordado con Enrique en la junta del <b>18 de junio de 2026</b>. El reto se plantea como un <b>concierto</b>: cada alumno presenta en vivo algo hecho con <b>Max for Live</b> (un instrumento o dispositivo interactivo propio).</p>
+      <p class="lead">Se acordó plantear el reto como un concierto donde cada alumno presenta en vivo algo hecho con Max for Live (un instrumento o dispositivo interactivo propio).</p>
 
       <div class="grp">
         <div class="grptitle"><span>Formato del evento</span></div>
-        <p class="lead">· Un <b>equipo de alumnos</b> puede encargarse de la organización del evento (logística del concierto).</p>
-        <p class="lead">· Puede haber una <b>banda headliner</b> invitada, por ejemplo la banda del profe Moncho.</p>
+        <p class="lead">· Un equipo de alumnos puede encargarse de la organización del evento (logística del concierto).</p>
+        <p class="lead">· Puede haber una banda headliner invitada, por ejemplo la banda del profe Moncho.</p>
       </div>
 
       <div class="grp">
-        <div class="grptitle"><span>Esqueletos de reto · 3 formas base de entregable</span></div>
-        <p class="lead">Tres plantillas que los alumnos pueden tomar como punto de partida, cada una apoyada con <b>videos tutoriales y guías</b>:</p>
-        <ul style="margin:6px 0 0 22px;font-size:15px;line-height:1.7;">
-          <li><b>Sintetizador</b></li>
-          <li><b>Drum machine interactiva</b></li>
-          <li><b>Sampler</b></li>
-        </ul>
-        <p class="lead" style="margin-top:10px;">Los alumnos son <b>libres de no seguir el esqueleto</b> y hacer lo que quieran, siempre que cumplan los lineamientos generales de lo que debe llevar el reto.</p>
-      </div>
-
-      <div class="grp">
-        <div class="grptitle"><span>Repositorio</span></div>
-        <p class="lead">Crear un <b>GitHub</b> con todo lo acordado: lineamientos del reto, esqueletos, tutoriales y guías de apoyo.</p>
+        <div class="grptitle"><span>Esqueletos de reto</span></div>
+        <p class="lead">Como apoyo se podrían ofrecer algunos esqueletos: plantillas o ejemplos de entregable, con videos tutoriales y guías. Por ahora son solo ideas; todavía falta definir bien de qué tratará cada uno. A modo de ejemplo podrían ser un sintetizador, una drum machine interactiva o un sampler.</p>
+        <p class="lead">Los alumnos pueden no seguir ningún esqueleto y proponer lo suyo, siempre que cumplan los lineamientos generales de lo que debe llevar el reto.</p>
       </div>
     </div>
   </div>
@@ -189,7 +179,7 @@
 
   <!-- HORAS POR TEMA -->
   <div class="acc">
-    <div class="acc-head"><h2>Horas por tema</h2><span class="chev">▶</span></div>
+    <div class="acc-head"><h2>Horas por tema (sugerido por el analítico)</h2><span class="chev">▶</span></div>
     <div class="acc-body">
       <div class="vrow head"><div>Tema</div><div>Horas</div></div>
       <div class="vrow"><div class="vname">Tema 1 · Computación, audio digital y protocolos</div><div>9 h</div></div>
@@ -205,7 +195,7 @@
 
   <!-- EVALUACIÓN -->
   <div class="acc">
-    <div class="acc-head"><h2>Evaluación</h2><span class="chev">▶</span></div>
+    <div class="acc-head"><h2>Evaluación (sugerido por el analítico)</h2><span class="chev">▶</span></div>
     <div class="acc-body">
       <div class="evalrow"><span>Actividad de aprendizaje 1</span><b>3%</b></div>
       <div class="evalrow"><span>Actividad de aprendizaje 2</span><b>2%</b></div>
@@ -400,11 +390,12 @@
     persist(); refresh();
   }
 
-  // acordeones (todos menos el fijo)
+  // acordeones (todos menos el fijo): solo uno abierto a la vez
   document.querySelectorAll('.acc:not(.fixed) .acc-head').forEach(head => {
     head.addEventListener('click', () => {
       const acc = head.parentElement; const wasOpen = acc.classList.contains('open');
-      acc.classList.toggle('open', !wasOpen);
+      document.querySelectorAll('.acc:not(.fixed)').forEach(a => a.classList.remove('open'));
+      if(!wasOpen) acc.classList.add('open');
     });
   });
 
