@@ -210,7 +210,13 @@
   // Pega aquí la config de tu proyecto Firebase para que las marcas se compartan en vivo
   // entre Mario y Enrique. Mientras esté vacío, el horario se guarda solo en este navegador.
   const firebaseConfig = {
-    // apiKey: "...", authDomain: "...", databaseURL: "...", projectId: "..."
+    apiKey: "AIzaSyA1c-U6GwdGiPYMWmyMq4IcNyXu3QsxNC0",
+    authDomain: "tm2005b.firebaseapp.com",
+    databaseURL: "https://tm2005b-default-rtdb.firebaseio.com",
+    projectId: "tm2005b",
+    storageBucket: "tm2005b.firebasestorage.app",
+    messagingSenderId: "130056709420",
+    appId: "1:130056709420:web:afe50e0f13bcae4f043889"
   };
   const USE_FB = !!firebaseConfig.apiKey;
   let saved = JSON.parse(localStorage.getItem(KEY) || '{}');
