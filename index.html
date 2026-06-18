@@ -94,9 +94,31 @@
   .evalrow b{color:var(--verde);}
 
   @media(max-width:900px){ .calgrid{grid-template-columns:repeat(2,1fr);} }
+
+  /* gate de contraseña */
+  #gate{position:fixed;inset:0;z-index:1000;background:linear-gradient(180deg,#0a3d2c,#0e5a40);display:flex;align-items:center;justify-content:center;}
+  #gate.hidden{display:none;}
+  .gatebox{background:#fff;border-radius:16px;padding:32px 30px;width:min(360px,90vw);box-shadow:0 12px 40px rgba(0,0,0,.3);text-align:center;}
+  .gatebox h2{color:var(--tec);font-size:20px;margin-bottom:6px;}
+  .gatebox p{color:var(--gris);font-size:14px;margin-bottom:16px;}
+  .gatebox input{width:100%;padding:11px 13px;border:1.5px solid var(--gris-borde);border-radius:9px;font-size:15px;margin-bottom:12px;}
+  .gatebox input:focus{outline:none;border-color:var(--verde);}
+  .gatebox button{width:100%;background:var(--verde);color:#fff;border:none;border-radius:9px;padding:11px;font-size:15px;font-weight:700;cursor:pointer;}
+  .gatebox button:hover{background:#009a45;}
+  #gateerr{color:#c0392b;font-size:13px;margin-top:10px;min-height:16px;}
 </style>
 </head>
 <body>
+  <div id="gate">
+    <div class="gatebox">
+      <h2>TM2005B · acceso</h2>
+      <p>Plan compartido Mario / Enrique. Introduce la contraseña.</p>
+      <input id="gatepw" type="password" placeholder="Contraseña" autocomplete="off" autofocus>
+      <button onclick="checkGate()">Entrar</button>
+      <div id="gateerr"></div>
+    </div>
+  </div>
+
   <h1>Diseño de aplicaciones interactivas — plan de sesiones</h1>
   <div class="h1sub">Clase compartida Enrique / Mario · TM2005B · Bloque Periodo 1 · 10 ago – 11 sep 2026</div>
 
@@ -205,6 +227,16 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <script>
+  // ---- Acceso con contraseña (gate simple) ----
+  const GATE_PW = "MarEnTM2005";
+  function checkGate(){
+    const v = document.getElementById('gatepw').value.trim();
+    if(v === GATE_PW){ localStorage.setItem('tm2005b_gate','1'); document.getElementById('gate').classList.add('hidden'); }
+    else { document.getElementById('gateerr').textContent = 'Contraseña incorrecta'; document.getElementById('gatepw').select(); }
+  }
+  if(localStorage.getItem('tm2005b_gate')==='1') document.getElementById('gate').classList.add('hidden');
+  document.getElementById('gatepw').addEventListener('keydown', function(e){ if(e.key==='Enter') checkGate(); });
+
   const KEY = 'tm2005b_profes';
   // === Sincronización en vivo (Firebase) ===
   // Pega aquí la config de tu proyecto Firebase para que las marcas se compartan en vivo
