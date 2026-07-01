@@ -10,6 +10,7 @@
     --azul:#2563eb; --azul-soft:#eff4ff; --azul-borde:#b9cdf7;
     --gris:#475467; --gris-soft:#f3f5f7; --gris-borde:#d9dedc;
     --tinta:#1d2939; --tec:#0a3d2c;
+    --amber:#d99000; --amber-soft:#fff7e6;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:-apple-system,Helvetica,Arial,sans-serif;color:var(--tinta);background:linear-gradient(180deg,#e8f0ec 0%,#eef3f0 100%);background-attachment:fixed;padding:36px 48px;font-size:17px;}
@@ -34,6 +35,7 @@
   .acc-head .chev{font-size:14px;color:var(--verde-soft);transition:transform .2s;}
   .acc.open .acc-head .chev{transform:rotate(90deg);}
   .acc.fixed .acc-head{cursor:default;background:var(--verde);}
+  .acc.acc-amber.fixed .acc-head{background:var(--amber);}
   .acc.fixed .chev{display:none;}
   .acc-body{padding:0 24px;max-height:0;overflow:hidden;transition:max-height .25s ease,padding .25s ease;background:#fff;}
   .acc.open .acc-body{max-height:none;padding:20px 24px 22px;}
@@ -51,6 +53,22 @@
   .grptitle{font-size:15px;font-weight:700;color:var(--tec);background:var(--verde-soft);border-left:6px solid var(--verde);border-radius:8px;padding:9px 14px;margin-bottom:10px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;}
   .grptitle .gh{color:var(--verde);font-weight:700;}
 
+  /* pendientes (checkbox + responsable) */
+  .pend{display:flex;align-items:flex-start;gap:13px;padding:12px 4px;border-bottom:1px solid #eef2f0;cursor:pointer;}
+  .pend:last-child{border-bottom:none;}
+  .pend input[type=checkbox]{appearance:none;-webkit-appearance:none;width:22px;height:22px;border:2px solid var(--gris-borde);border-radius:6px;background:#fff;cursor:pointer;flex:none;margin-top:1px;position:relative;transition:all .12s;}
+  .pend input[type=checkbox]:hover{border-color:var(--amber);}
+  .pend input[type=checkbox]:checked{background:var(--amber);border-color:var(--amber);}
+  .pend input[type=checkbox]:checked::after{content:"";position:absolute;left:7px;top:3px;width:5px;height:10px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg);}
+  .pend-whos{flex:none;display:flex;flex-direction:column;gap:4px;margin-top:1px;}
+  .pend-who{font-size:11.5px;font-weight:800;color:#fff;border-radius:99px;padding:2px 11px;text-align:center;}
+  .pend-who.who-mario{background:var(--verde);}
+  .pend-who.who-enrique{background:var(--azul);}
+  .pend-txt{font-size:15px;color:var(--tinta);line-height:1.45;}
+  .pend.done .pend-txt{color:var(--gris);text-decoration:line-through;}
+  .pend-lock{display:inline-block;margin-top:6px;font-size:12.5px;font-weight:700;color:#9a6700;background:var(--amber-soft);border:1px solid #f3d79a;border-radius:7px;padding:3px 9px;}
+  .pend-empty{font-size:14px;color:var(--gris);font-style:italic;padding:4px 2px;}
+
   /* botones de profesor */
   .pbtn{font-size:13px;font-weight:700;border-radius:8px;padding:5px 12px;cursor:pointer;border:1.5px solid var(--gris-borde);background:#fff;color:var(--gris);transition:all .12s;}
   .pbtn:hover{border-color:var(--gris);}
@@ -63,9 +81,11 @@
   .pbtn.on.partial{background-image:repeating-linear-gradient(45deg, rgba(255,255,255,.34) 0 3px, rgba(255,255,255,0) 3px 7px);}
   .pbtn.mario.minor{border-color:var(--verde-borde);color:var(--verde);box-shadow:inset 0 -3px 0 var(--verde);}
   .pbtn.enrique.minor{border-color:var(--azul-borde);color:var(--azul);box-shadow:inset 0 -3px 0 var(--azul);}
+  .pbtn.dim{opacity:.28;}
+  .pbtn.dim:hover{opacity:.95;}
 
   /* barra de asignación masiva por día */
-  .bulkbar{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:20px;padding:14px;background:var(--gris-soft);border:1px solid var(--gris-borde);border-radius:12px;}
+  .bulkbar{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:14px;padding:14px;background:var(--gris-soft);border:1px solid var(--gris-borde);border-radius:12px;}
   .bulkhint{flex-basis:100%;font-size:12.5px;color:var(--gris);font-weight:600;margin-bottom:2px;}
   .bulkcol{display:flex;flex-direction:column;gap:6px;flex:1;min-width:120px;}
   .bulkcol .bl{font-size:13px;font-weight:800;color:var(--tinta);}
@@ -75,23 +95,47 @@
   .bulkclear{align-self:flex-end;background:#fff;color:var(--gris);border:1.5px solid var(--gris-borde);}
   .bulkclear:hover{border-color:#c0392b;color:#c0392b;}
 
+  .draghint{font-size:13px;color:var(--gris);font-weight:600;margin-bottom:14px;background:var(--verde-soft);border:1px solid var(--verde-borde);border-radius:9px;padding:9px 12px;}
+
   /* calendario semanal */
   .calweek{margin-bottom:20px;}
   .calweek h3{font-size:13.5px;color:var(--tec);font-weight:800;margin-bottom:9px;text-transform:uppercase;letter-spacing:.6px;border-bottom:2px solid var(--verde-soft);padding-bottom:5px;}
   .calgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;}
-  .daycard{border:1px solid #e6ebe8;border-radius:11px;background:#fbfdfc;padding:11px 12px;display:flex;flex-direction:column;gap:7px;min-height:172px;}
+  .daycard{border:1px solid #e6ebe8;border-radius:11px;background:#fbfdfc;padding:11px 12px;display:flex;flex-direction:column;gap:7px;min-height:186px;}
   .daycard.pickedM{border-color:var(--verde-borde);background:var(--verde-soft);}
   .daycard.pickedR{border-color:var(--azul-borde);background:var(--azul-soft);}
   .dc-day{font-size:14px;font-weight:800;color:var(--tec);}
-  .tbadge{display:inline-block;font-size:10.5px;font-weight:800;background:#fff;border:1px solid #e6ebe8;border-radius:99px;padding:2px 9px;}
   .dc-meta{font-size:10.5px;color:var(--gris);font-weight:600;}
-  .dc-cont{font-size:12.5px;color:var(--gris);line-height:1.45;flex:1;}
+  .temabox{position:relative;flex:1;border:1.5px solid var(--gris-borde);border-radius:10px;background:#fff;padding:9px 26px 10px 11px;cursor:grab;box-shadow:0 1px 3px rgba(0,0,0,.06);transition:transform .1s,box-shadow .12s,border-color .12s;}
+  .temabox:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(10,61,44,.16);border-color:var(--verde-borde);}
+  .temabox:active{cursor:grabbing;}
+  .temabox.dragging{opacity:.4;}
+  .temabox.dragover{border:2px dashed var(--verde);box-shadow:0 0 0 3px var(--verde-soft);}
+  .temabox .grip{position:absolute;top:8px;right:8px;color:#b6c2bc;font-size:14px;letter-spacing:-2px;}
+  .tbadge{display:inline-block;font-size:10.5px;font-weight:800;background:#fff;border:1px solid #e6ebe8;border-radius:99px;padding:2px 9px;}
+  .tema-cont{font-size:12.5px;color:var(--gris);line-height:1.45;margin-top:6px;}
   .dc-pick{display:flex;gap:5px;}
   .dc-pick .pbtn{flex:1;padding:5px 0;font-size:12px;text-align:center;}
 
   .evalrow{display:flex;justify-content:space-between;gap:20px;font-size:15px;padding:7px 0;border-bottom:1px solid #f0f2f1;max-width:560px;}
   .evalrow:last-child{border-bottom:none;}
   .evalrow b{color:var(--verde);}
+
+  /* Notas para platicar en la junta */
+  .nj-form{display:flex;flex-direction:column;gap:12px;background:var(--gris-soft);border:1px solid var(--gris-borde);border-radius:12px;padding:14px 16px;margin-bottom:18px;}
+  .nj-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .nj-lbl{font-size:13.5px;font-weight:800;color:var(--tinta);}
+  .nj-form textarea{width:100%;min-height:72px;border:1.5px solid var(--gris-borde);border-radius:9px;padding:10px 12px;font-size:14.5px;font-family:inherit;resize:vertical;}
+  .nj-form textarea:focus{outline:none;border-color:var(--verde);}
+  .nj-add{align-self:flex-start;background:var(--verde);color:#fff;border:none;border-radius:9px;padding:9px 20px;font-size:14px;font-weight:700;cursor:pointer;}
+  .nj-add:hover{background:#009a45;}
+  .nj-list{display:flex;flex-direction:column;gap:10px;}
+  .nj-empty{font-size:13.5px;color:var(--gris);font-style:italic;}
+  .nj-note{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid #e6ebe8;border-radius:11px;padding:11px 13px;box-shadow:0 1px 3px rgba(0,0,0,.05);}
+  .nj-note .pend-who{flex:none;margin-top:1px;}
+  .nj-txt{flex:1;font-size:14.5px;line-height:1.5;color:var(--tinta);white-space:pre-wrap;}
+  .nj-del{flex:none;background:none;border:none;color:#c0392b;font-size:16px;cursor:pointer;opacity:.45;padding:0 4px;line-height:1;}
+  .nj-del:hover{opacity:1;}
 
   @media(max-width:900px){ .calgrid{grid-template-columns:repeat(2,1fr);} }
 
@@ -145,6 +189,29 @@
       <p class="lead"><b>Horario:</b> martes, miércoles y viernes de 3 a 7 en el estudio (4 h); lunes y jueves de 5 a 7 en las computadoras (2 h). 16 h por semana · 25 clases en 5 semanas · del 10 de agosto al 11 de septiembre de 2026.</p>
       <p class="lead"><b>Reparto Mario / Enrique:</b> con los botones de arriba del calendario asignas un día de la semana completo a uno de los dos; con el selector de cada clase lo ajustas individualmente. El balance de arriba se calcula por horas.</p>
       <p class="lead"><b>Impartición de los temas:</b> se acordó que todos los temas se vean pero de forma superficial (por ejemplo, sin necesariamente abrir el software o construir algo). El mayor énfasis de la clase está en lo que se relaciona con el proyecto (el reto).</p>
+    </div>
+  </div>
+
+  <!-- PENDIENTES -->
+  <div class="acc fixed open acc-amber">
+    <div class="acc-head"><h2>📌 Pendientes 📌</h2></div>
+    <div class="acc-body"><div id="pendientes"></div></div>
+  </div>
+
+  <!-- NOTAS PARA LA PRÓXIMA JUNTA -->
+  <div class="acc fixed open">
+    <div class="acc-head"><h2>🗓️ Notas para platicar en la junta del lunes 6 de julio · 11:00 am</h2></div>
+    <div class="acc-body">
+      <div class="nj-form">
+        <div class="nj-row">
+          <span class="nj-lbl">¿Quién anota?</span>
+          <button class="pbtn mario" id="njMario" onclick="setNjAutor('Mario')">Mario</button>
+          <button class="pbtn enrique" id="njEnrique" onclick="setNjAutor('Enrique')">Enrique</button>
+        </div>
+        <textarea id="njTexto" placeholder="Escribe la nota para la próxima junta…"></textarea>
+        <button class="nj-add" onclick="addNota()">Agregar nota</button>
+      </div>
+      <div class="nj-list" id="njList"></div>
     </div>
   </div>
 
@@ -222,6 +289,7 @@
     <div class="acc-head"><h2>Calendario por semanas</h2><span class="chev">▶</span></div>
     <div class="acc-body">
       <div class="bulkbar" id="bulkbar"></div>
+      <div class="draghint">Arrastra el recuadro del tema de una sesión a otra y se intercambian. El día y quién la imparte no se mueven.</div>
       <div id="cal"></div>
     </div>
   </div>
@@ -277,9 +345,8 @@
   document.getElementById('gatepw').addEventListener('keydown', function(e){ if(e.key==='Enter') checkGate(); });
 
   const KEY = 'tm2005b_profes';
-  // === Sincronización en vivo (Firebase) ===
-  // Pega aquí la config de tu proyecto Firebase para que las marcas se compartan en vivo
-  // entre Mario y Enrique. Mientras esté vacío, el horario se guarda solo en este navegador.
+
+  // === Sincronización en vivo (Firebase) — datos bajo tm2005b/estado ===
   const firebaseConfig = {
     apiKey: "AIzaSyA1c-U6GwdGiPYMWmyMq4IcNyXu3QsxNC0",
     authDomain: "tm2005b.firebaseapp.com",
@@ -311,72 +378,148 @@
     {wd:'vie', lbl:'Viernes',  meta:'3–7 · 4 h · estudio'}
   ];
 
+  // Posiciones fijas del calendario (fecha + quién imparte). El tema NO vive aquí: viaja aparte.
   const WEEKS = [
     {label:'Semana 1 · 10–14 ago', days:[
-      {id:'s1', wd:'lun', day:'Lun 10 ago', meta:'5–7 · 2 h · compu',  h:2, tema:'T1', cont:'1.1 Historia y arquitecturas de la computación.'},
-      {id:'s2', wd:'mar', day:'Mar 11 ago', meta:'3–7 · 4 h · estudio',h:4, tema:'T1', cont:'1.2 Audio digital (DAC/ADC, Nyquist, cuantización, FFT).'},
-      {id:'s3', wd:'mie', day:'Mié 12 ago', meta:'3–7 · 4 h · estudio',h:4, tema:'T1', cont:'Cierre T1 · 1.3 Protocolos OSC y MIDI → inicio T2.'},
-      {id:'s4', wd:'jue', day:'Jue 13 ago', meta:'5–7 · 2 h · compu',  h:2, tema:'T2', cont:'2.1 Síntesis y procesamiento de señales en Pure Data / MAX.'},
-      {id:'s5', wd:'vie', day:'Vie 14 ago', meta:'3–7 · 4 h · estudio',h:4, tema:'T2', cont:'2.2 Síntesis aditiva · 2.3 Síntesis sustractiva (filtros).'}
+      {id:'s1', wd:'lun', day:'Lun 10 ago', meta:'5–7 · 2 h · compu',  h:2},
+      {id:'s2', wd:'mar', day:'Mar 11 ago', meta:'3–7 · 4 h · estudio',h:4},
+      {id:'s3', wd:'mie', day:'Mié 12 ago', meta:'3–7 · 4 h · estudio',h:4},
+      {id:'s4', wd:'jue', day:'Jue 13 ago', meta:'5–7 · 2 h · compu',  h:2},
+      {id:'s5', wd:'vie', day:'Vie 14 ago', meta:'3–7 · 4 h · estudio',h:4}
     ]},
     {label:'Semana 2 · 17–21 ago', days:[
-      {id:'s6', wd:'lun', day:'Lun 17 ago', meta:'5–7 · 2 h · compu',  h:2, tema:'T2', cont:'2.4 Síntesis AM y FM · 2.5 Mezcla.'},
-      {id:'s7', wd:'mar', day:'Mar 18 ago', meta:'3–7 · 4 h · estudio',h:4, tema:'T2', cont:'2.6 Dispositivos móviles (Mob Mu Plat, Touch OSC).'},
-      {id:'s8', wd:'mie', day:'Mié 19 ago', meta:'3–7 · 4 h · estudio',h:4, tema:'T2', cont:'Cierre T2 · 2.7 Sensores y transductores → inicio T3.'},
-      {id:'s9', wd:'jue', day:'Jue 20 ago', meta:'5–7 · 2 h · compu',  h:2, tema:'T3', cont:'3.1 Introducción a C++.'},
-      {id:'s10',wd:'vie', day:'Vie 21 ago', meta:'3–7 · 4 h · estudio',h:4, tema:'T3', cont:'3.1 C++ (condicionales, ciclos, funciones, WAV).'}
+      {id:'s6', wd:'lun', day:'Lun 17 ago', meta:'5–7 · 2 h · compu',  h:2},
+      {id:'s7', wd:'mar', day:'Mar 18 ago', meta:'3–7 · 4 h · estudio',h:4},
+      {id:'s8', wd:'mie', day:'Mié 19 ago', meta:'3–7 · 4 h · estudio',h:4},
+      {id:'s9', wd:'jue', day:'Jue 20 ago', meta:'5–7 · 2 h · compu',  h:2},
+      {id:'s10',wd:'vie', day:'Vie 21 ago', meta:'3–7 · 4 h · estudio',h:4}
     ]},
     {label:'Semana 3 · 24–28 ago', days:[
-      {id:'s11',wd:'lun', day:'Lun 24 ago', meta:'5–7 · 2 h · compu',  h:2, tema:'T3', cont:'3.2 JUCE (Projucer, app stand-alone).'},
-      {id:'s12',wd:'mar', day:'Mar 25 ago', meta:'3–7 · 4 h · estudio',h:4, tema:'T3', cont:'Cierre T3 · 3.2 plugins VST3/AU · 3.3 generación de formas de onda.'},
-      {id:'s13',wd:'mie', day:'Mié 26 ago', meta:'3–7 · 4 h · estudio',h:4, tema:'T4', cont:'4.1 JavaScript y Web Audio API.'},
-      {id:'s14',wd:'jue', day:'Jue 27 ago', meta:'5–7 · 2 h · compu',  h:2, tema:'T4', cont:'4.2 HTML y CSS · 4.3 oscilador y procesos.'},
-      {id:'s15',wd:'vie', day:'Vie 28 ago', meta:'3–7 · 4 h · estudio',h:4, tema:'T4', cont:'4.3 efectos (reverb, delay, compresión).'}
+      {id:'s11',wd:'lun', day:'Lun 24 ago', meta:'5–7 · 2 h · compu',  h:2},
+      {id:'s12',wd:'mar', day:'Mar 25 ago', meta:'3–7 · 4 h · estudio',h:4},
+      {id:'s13',wd:'mie', day:'Mié 26 ago', meta:'3–7 · 4 h · estudio',h:4},
+      {id:'s14',wd:'jue', day:'Jue 27 ago', meta:'5–7 · 2 h · compu',  h:2},
+      {id:'s15',wd:'vie', day:'Vie 28 ago', meta:'3–7 · 4 h · estudio',h:4}
     ]},
     {label:'Semana 4 · 31 ago – 4 sep', days:[
-      {id:'s16',wd:'lun', day:'Lun 31 ago', meta:'5–7 · 2 h · compu',  h:2, tema:'T4', cont:'4.4 carga y reproductor de audio en web.'},
-      {id:'s17',wd:'mar', day:'Mar 1 sep',  meta:'3–7 · 4 h · estudio',h:4, tema:'T4', cont:'Cierre T4 · 4.5 interfaces gráficas → inicio T5.'},
-      {id:'s18',wd:'mie', day:'Mié 2 sep',  meta:'3–7 · 4 h · estudio',h:4, tema:'T5', cont:'Espacialización, IA, nuevas interfaces, composición algorítmica → inicio Reto.'},
-      {id:'s19',wd:'jue', day:'Jue 3 sep',  meta:'5–7 · 2 h · compu',  h:2, tema:'RETO',cont:'Trabajo de reto (concierto Max for Live).'},
-      {id:'s20',wd:'vie', day:'Vie 4 sep',  meta:'3–7 · 4 h · estudio',h:4, tema:'RETO',cont:'Trabajo de reto (concierto Max for Live).'}
+      {id:'s16',wd:'lun', day:'Lun 31 ago', meta:'5–7 · 2 h · compu',  h:2},
+      {id:'s17',wd:'mar', day:'Mar 1 sep',  meta:'3–7 · 4 h · estudio',h:4},
+      {id:'s18',wd:'mie', day:'Mié 2 sep',  meta:'3–7 · 4 h · estudio',h:4},
+      {id:'s19',wd:'jue', day:'Jue 3 sep',  meta:'5–7 · 2 h · compu',  h:2},
+      {id:'s20',wd:'vie', day:'Vie 4 sep',  meta:'3–7 · 4 h · estudio',h:4}
     ]},
     {label:'Semana 5 · 7–11 sep', days:[
-      {id:'s21',wd:'lun', day:'Lun 7 sep',  meta:'5–7 · 2 h · compu',  h:2, tema:'RETO',cont:'Trabajo de reto (concierto Max for Live).'},
-      {id:'s22',wd:'mar', day:'Mar 8 sep',  meta:'3–7 · 4 h · estudio',h:4, tema:'RETO',cont:'Cierre del reto → inicio seguimiento y evaluación.'},
-      {id:'s23',wd:'mie', day:'Mié 9 sep',  meta:'3–7 · 4 h · estudio',h:4, tema:'EVAL',cont:'Seguimiento y evaluación (entregables).'},
-      {id:'s24',wd:'jue', day:'Jue 10 sep', meta:'5–7 · 2 h · compu',  h:2, tema:'EVAL',cont:'Seguimiento y evaluación (entregables).'},
-      {id:'s25',wd:'vie', day:'Vie 11 sep', meta:'3–7 · 4 h · estudio',h:4, tema:'EVAL',cont:'Cierre: Entregable 2 / proyecto final.'}
+      {id:'s21',wd:'lun', day:'Lun 7 sep',  meta:'5–7 · 2 h · compu',  h:2},
+      {id:'s22',wd:'mar', day:'Mar 8 sep',  meta:'3–7 · 4 h · estudio',h:4},
+      {id:'s23',wd:'mie', day:'Mié 9 sep',  meta:'3–7 · 4 h · estudio',h:4},
+      {id:'s24',wd:'jue', day:'Jue 10 sep', meta:'5–7 · 2 h · compu',  h:2},
+      {id:'s25',wd:'vie', day:'Vie 11 sep', meta:'3–7 · 4 h · estudio',h:4}
     ]}
+  ];
+
+  // Temas (un tema por sesión) en su orden inicial. Se pueden mover por drag and drop.
+  const TEMAS_DEFAULT = [
+    {tema:'T1',  cont:'1.1 Historia y arquitecturas de la computación.'},
+    {tema:'T1',  cont:'1.2 Audio digital (DAC/ADC, Nyquist, cuantización, FFT).'},
+    {tema:'T1',  cont:'Cierre T1 · 1.3 Protocolos OSC y MIDI → inicio T2.'},
+    {tema:'T2',  cont:'2.1 Síntesis y procesamiento de señales en Pure Data / MAX.'},
+    {tema:'T2',  cont:'2.2 Síntesis aditiva · 2.3 Síntesis sustractiva (filtros).'},
+    {tema:'T2',  cont:'2.4 Síntesis AM y FM · 2.5 Mezcla.'},
+    {tema:'T2',  cont:'2.6 Dispositivos móviles (Mob Mu Plat, Touch OSC).'},
+    {tema:'T2',  cont:'Cierre T2 · 2.7 Sensores y transductores → inicio T3.'},
+    {tema:'T3',  cont:'3.1 Introducción a C++.'},
+    {tema:'T3',  cont:'3.1 C++ (condicionales, ciclos, funciones, WAV).'},
+    {tema:'T3',  cont:'3.2 JUCE (Projucer, app stand-alone).'},
+    {tema:'T3',  cont:'Cierre T3 · 3.2 plugins VST3/AU · 3.3 generación de formas de onda.'},
+    {tema:'T4',  cont:'4.1 JavaScript y Web Audio API.'},
+    {tema:'T4',  cont:'4.2 HTML y CSS · 4.3 oscilador y procesos.'},
+    {tema:'T4',  cont:'4.3 efectos (reverb, delay, compresión).'},
+    {tema:'T4',  cont:'4.4 carga y reproductor de audio en web.'},
+    {tema:'T4',  cont:'Cierre T4 · 4.5 interfaces gráficas → inicio T5.'},
+    {tema:'T5',  cont:'Espacialización, IA, nuevas interfaces, composición algorítmica → inicio Reto.'},
+    {tema:'RETO',cont:'Trabajo de reto (concierto Max for Live).'},
+    {tema:'RETO',cont:'Trabajo de reto (concierto Max for Live).'},
+    {tema:'RETO',cont:'Trabajo de reto (concierto Max for Live).'},
+    {tema:'RETO',cont:'Cierre del reto → inicio seguimiento y evaluación.'},
+    {tema:'EVAL',cont:'Seguimiento y evaluación (entregables).'},
+    {tema:'EVAL',cont:'Seguimiento y evaluación (entregables).'},
+    {tema:'EVAL',cont:'Cierre: Entregable 2 / proyecto final.'}
   ];
 
   const ALLDAYS = WEEKS.flatMap(w => w.days);
   const TOTAL = ALLDAYS.reduce((s,d) => s + d.h, 0);
 
+  // Orden de los temas por posición (índice en TEMAS_DEFAULT). Editable por drag and drop.
+  const ORDEN_KEY = 'tm2005b_temas_orden';
+  let temasOrden = JSON.parse(localStorage.getItem(ORDEN_KEY) || 'null');
+  if(!Array.isArray(temasOrden) || temasOrden.length !== TEMAS_DEFAULT.length){
+    temasOrden = TEMAS_DEFAULT.map((_,i)=>i);
+    localStorage.setItem(ORDEN_KEY, JSON.stringify(temasOrden));
+  }
+
   function persist(){
-    if(USE_FB && fbRef) fbRef.set(saved);
-    else localStorage.setItem(KEY, JSON.stringify(saved));
+    localStorage.setItem(KEY, JSON.stringify(saved));
+    localStorage.setItem(ORDEN_KEY, JSON.stringify(temasOrden));
+    localStorage.setItem(PEND_KEY, JSON.stringify(pendEstado));
+    localStorage.setItem(NJ_KEY, JSON.stringify(notasJunta));
+    if(USE_FB && fbRef) fbRef.set({asignaciones: saved, temas: temasOrden, pendientes: pendEstado, notasJunta: notasJunta});
   }
   function refresh(){ renderBulk(); renderCal(); updateBalance(); }
 
-  function dayCard(d){
+  function dayCard(p){
+    const d  = ALLDAYS[p];
+    const tb = TEMAS_DEFAULT[temasOrden[p]];
+    const t  = TEMA[tb.tema];
     const who = saved[d.id];
-    const t = TEMA[d.tema];
     const cls = who==='mario' ? ' pickedM' : who==='enrique' ? ' pickedR' : '';
-    return '<div class="daycard'+cls+'" data-id="'+d.id+'">'
+    return '<div class="daycard'+cls+'">'
       + '<div class="dc-day">'+d.day+'</div>'
-      + '<div><span class="tbadge" style="color:'+t.col+'">'+t.lbl+'</span></div>'
       + '<div class="dc-meta">'+d.meta+'</div>'
-      + '<div class="dc-cont">'+d.cont+'</div>'
+      + '<div class="temabox" draggable="true" data-pos="'+p+'" title="Arrastra este tema a otra sesión">'
+      +   '<span class="grip">⠿</span>'
+      +   '<span class="tbadge" style="color:'+t.col+'">'+t.lbl+'</span>'
+      +   '<div class="tema-cont">'+tb.cont+'</div>'
+      + '</div>'
       + '<div class="dc-pick">'
-      +   '<button class="pbtn mario'+(who==='mario'?' on':'')+'" onclick="choose(\''+d.id+'\',\'mario\')">Mario</button>'
-      +   '<button class="pbtn enrique'+(who==='enrique'?' on':'')+'" onclick="choose(\''+d.id+'\',\'enrique\')">Enrique</button>'
+      +   '<button class="pbtn mario'+(who==='mario'?' on':(who?' dim':''))+'" onclick="choose(\''+d.id+'\',\'mario\')">Mario</button>'
+      +   '<button class="pbtn enrique'+(who==='enrique'?' on':(who?' dim':''))+'" onclick="choose(\''+d.id+'\',\'enrique\')">Enrique</button>'
       + '</div></div>';
   }
 
+  let dragSrc = null;
   function renderCal(){
-    document.getElementById('cal').innerHTML = WEEKS.map(w =>
-      '<div class="calweek"><h3>'+w.label+'</h3><div class="calgrid">'+w.days.map(dayCard).join('')+'</div></div>'
-    ).join('');
+    let html = '', p = 0;
+    WEEKS.forEach(w => {
+      html += '<div class="calweek"><h3>'+w.label+'</h3><div class="calgrid">';
+      w.days.forEach(() => { html += dayCard(p); p++; });
+      html += '</div></div>';
+    });
+    const cal = document.getElementById('cal');
+    cal.innerHTML = html;
+    cal.querySelectorAll('.temabox').forEach(box => {
+      box.addEventListener('dragstart', e => {
+        dragSrc = +box.dataset.pos;
+        box.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        try{ e.dataTransfer.setData('text/plain', String(dragSrc)); }catch(_){ }
+      });
+      box.addEventListener('dragend', () => {
+        box.classList.remove('dragging');
+        cal.querySelectorAll('.temabox').forEach(b=>b.classList.remove('dragover'));
+      });
+      box.addEventListener('dragover', e => { e.preventDefault(); e.dataTransfer.dropEffect='move'; box.classList.add('dragover'); });
+      box.addEventListener('dragleave', () => box.classList.remove('dragover'));
+      box.addEventListener('drop', e => {
+        e.preventDefault();
+        const tgt = +box.dataset.pos;
+        if(dragSrc !== null && dragSrc !== tgt){
+          const tmp = temasOrden[dragSrc]; temasOrden[dragSrc] = temasOrden[tgt]; temasOrden[tgt] = tmp;
+          persist();
+          refresh();
+        }
+        dragSrc = null;
+      });
+    });
   }
 
   // estado del día de la semana a lo largo de las 5 semanas
@@ -389,10 +532,10 @@
   function bulkCls(person, st){
     const cnt   = person==='mario' ? st.m : st.e;
     const other = person==='mario' ? st.e : st.m;
-    if(cnt===0)        return '';                // esta persona no tiene nada ese día
-    if(cnt===st.total) return ' on';             // todo el día es de esta persona → sólido
-    if(cnt>=other)     return ' on partial';     // mayoría con excepciones → sólido + rayitas
-    return ' minor';                             // minoría (alguna clase suelta) → rayita inferior
+    if(cnt===0)        return '';
+    if(cnt===st.total) return ' on';
+    if(cnt>=other)     return ' on partial';
+    return ' minor';
   }
   function renderBulk(){
     const cols = WEEKDAYS.map(x => {
@@ -448,11 +591,96 @@
     });
   });
 
+  // ---- Pendientes (checkbox + responsable) ----
+  const PEND_KEY = 'tm2005b_pendientes';
+  const PENDIENTES = [
+    {id:'p1', quien:'Mario', txt:'Definir los 2 esqueletos de Mario y acomodarlos en el calendario.'},
+    {id:'p2', quien:'Ambos', txt:'Reordenar los temas para que cada uno embone con el reto de su semana; dejar JUCE y lo que no tiene práctica al final. (Se pueden mover con la herramienta del calendario.)'},
+    {id:'p3', quien:'Mario', txt:'Crear el GitHub del reto con lineamientos, esqueletos, tutoriales y guías.'},
+    {id:'p4', quien:'Ambos', bloqueado:'Hasta el 12 de julio, cuando abre Canvas.', txt:'Revisar en Canvas las actividades de evaluación y el reto. Si convencen, se dejan; si no, ideamos otras.'}
+  ];
+  let pendEstado = JSON.parse(localStorage.getItem(PEND_KEY) || '{}');
+  function renderPendientes(){
+    const cont = document.getElementById('pendientes');
+    if(!PENDIENTES.length){ cont.innerHTML = '<div class="pend-empty">Sin pendientes por ahora.</div>'; return; }
+    cont.innerHTML = PENDIENTES.map(p => {
+      const done = !!pendEstado[p.id];
+      let chips;
+      if(p.quien === 'Ambos'){
+        chips = '<span class="pend-who who-mario">Mario</span><span class="pend-who who-enrique">Enrique</span>';
+      } else {
+        const whoCls = p.quien==='Mario' ? 'who-mario' : 'who-enrique';
+        chips = '<span class="pend-who '+whoCls+'">'+p.quien+'</span>';
+      }
+      const lock = p.bloqueado ? '<span class="pend-lock">🔒 '+p.bloqueado+'</span>' : '';
+      return '<label class="pend'+(done?' done':'')+'">'
+        + '<input type="checkbox" data-pid="'+p.id+'"'+(done?' checked':'')+'>'
+        + '<span class="pend-whos">'+chips+'</span>'
+        + '<span class="pend-txt">'+p.txt+lock+'</span>'
+        + '</label>';
+    }).join('');
+    cont.querySelectorAll('input[type=checkbox]').forEach(cb=>{
+      cb.onchange = ()=>{ pendEstado[cb.dataset.pid]=cb.checked; persist(); renderPendientes(); };
+    });
+  }
+
+  // ---- Notas para platicar en la junta (lunes 6 jul, 11:00 am) ----
+  const NJ_KEY = 'tm2005b_notasjunta';
+  let notasJunta = JSON.parse(localStorage.getItem(NJ_KEY) || '[]');
+  let njAutor = 'Mario';
+  function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function setNjAutor(a){
+    njAutor = a;
+    document.getElementById('njMario').classList.toggle('on', a==='Mario');
+    document.getElementById('njEnrique').classList.toggle('on', a==='Enrique');
+  }
+  function addNota(){
+    const ta = document.getElementById('njTexto');
+    const txt = ta.value.trim();
+    if(!txt){ ta.focus(); return; }
+    notasJunta.push({id:'n'+Date.now(), autor:njAutor, txt:txt});
+    ta.value='';
+    persist(); renderNotasJunta();
+  }
+  function delNota(id){
+    notasJunta = notasJunta.filter(n => n.id !== id);
+    persist(); renderNotasJunta();
+  }
+  function renderNotasJunta(){
+    const cont = document.getElementById('njList');
+    if(!notasJunta.length){ cont.innerHTML = '<div class="nj-empty">Aún no hay notas. Agrega la primera arriba.</div>'; return; }
+    cont.innerHTML = notasJunta.map(n => {
+      const whoCls = n.autor==='Mario' ? 'who-mario' : 'who-enrique';
+      return '<div class="nj-note">'
+        + '<span class="pend-who '+whoCls+'">'+n.autor+'</span>'
+        + '<span class="nj-txt">'+escapeHtml(n.txt)+'</span>'
+        + '<button class="nj-del" title="Eliminar" onclick="delNota(\''+n.id+'\')">✕</button>'
+        + '</div>';
+    }).join('');
+  }
+
   refresh();                          // pinta de inmediato (localStorage o vacío)
+  renderPendientes();
+  setNjAutor('Mario');
+  renderNotasJunta();
+
   if(USE_FB){                         // si hay Firebase, conecta y sincroniza en vivo
     firebase.initializeApp(firebaseConfig);
-    fbRef = firebase.database().ref('tm2005b/asignaciones');
-    fbRef.on('value', function(snap){ saved = snap.val() || {}; refresh(); });
+    fbRef = firebase.database().ref('tm2005b/estado');
+    fbRef.on('value', function(snap){
+      const e = snap.val();
+      if(e){
+        saved = e.asignaciones || {};
+        temasOrden = (Array.isArray(e.temas) && e.temas.length === TEMAS_DEFAULT.length) ? e.temas : TEMAS_DEFAULT.map((_,i)=>i);
+        pendEstado = e.pendientes || {};
+        notasJunta = Array.isArray(e.notasJunta) ? e.notasJunta : [];
+        refresh();
+        renderPendientes();
+        renderNotasJunta();
+      } else {
+        fbRef.set({asignaciones: saved, temas: temasOrden, pendientes: pendEstado, notasJunta: notasJunta});
+      }
+    });
   }
 </script>
 </body>
