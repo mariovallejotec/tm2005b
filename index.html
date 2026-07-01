@@ -562,7 +562,9 @@
   // ---- Pendientes (checkbox + responsable) ----
   const PEND_KEY = 'tm2005b_pendientes';
   const PENDIENTES = [
-    {id:'p1', quien:'Ambos', txt:'Reordenar los temas para que cada uno haga sentido con el reto de esa semana. Dejar al final los temas que no se conectan con ninguna práctica (por ejemplo, JUCE).'}
+    {id:'p1', quien:'Ambos', txt:'Reordenar los temas para que cada uno haga sentido con el reto de esa semana. Dejar al final los temas que no se conectan con ninguna práctica (por ejemplo, JUCE).'},
+    {id:'p2', quien:'Mario', txt:'Preparar los 2 esqueletos de Mario.'},
+    {id:'p3', quien:'Enrique', txt:'Preparar los 2 esqueletos de Enrique.'}
   ];
   let pendEstado = JSON.parse(localStorage.getItem(PEND_KEY) || '{}');
   function renderPendientes(){
