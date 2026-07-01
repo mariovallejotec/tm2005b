@@ -588,12 +588,7 @@
 
   // ---- Pendientes (checkbox + responsable) ----
   const PEND_KEY = 'tm2005b_pendientes';
-  const PENDIENTES = [
-    {id:'p1', quien:'Mario', txt:'Definir los 2 esqueletos de Mario y acomodarlos en el calendario.'},
-    {id:'p2', quien:'Ambos', txt:'Reordenar los temas para que cada uno embone con el reto de su semana; dejar JUCE y lo que no tiene práctica al final. (Se pueden mover con la herramienta del calendario.)'},
-    {id:'p3', quien:'Mario', txt:'Crear el GitHub del reto con lineamientos, esqueletos, tutoriales y guías.'},
-    {id:'p4', quien:'Ambos', bloqueado:'Hasta el 12 de julio, cuando abre Canvas.', txt:'Revisar en Canvas las actividades de evaluación y el reto. Si convencen, se dejan; si no, ideamos otras.'}
-  ];
+  const PENDIENTES = [];
   let pendEstado = JSON.parse(localStorage.getItem(PEND_KEY) || '{}');
   function renderPendientes(){
     const cont = document.getElementById('pendientes');
