@@ -224,11 +224,6 @@
       <p class="lead" style="margin-bottom:14px;">Acuerdos de la junta Mario / Enrique del 25 de junio que faltan por reflejar en el resto del plan.</p>
 
       <div class="grp">
-        <div class="grptitle"><span>Orden de los temas</span></div>
-        <p class="lead">Reordenar los temas para que cada uno haga sentido con el reto de esa semana. Dejar al final los temas que no se conectan con ninguna práctica (por ejemplo, JUCE).</p>
-      </div>
-
-      <div class="grp">
         <div class="grptitle"><span>Concierto / socio formador</span></div>
         <p class="lead">Revisar con Alex la posibilidad de que no haya socio formador y que el concierto sea interno.</p>
       </div>
@@ -574,7 +569,9 @@
 
   // ---- Pendientes (checkbox + responsable) ----
   const PEND_KEY = 'tm2005b_pendientes';
-  const PENDIENTES = [];
+  const PENDIENTES = [
+    {id:'p1', quien:'Ambos', txt:'Reordenar los temas para que cada uno haga sentido con el reto de esa semana. Dejar al final los temas que no se conectan con ninguna práctica (por ejemplo, JUCE).'}
+  ];
   let pendEstado = JSON.parse(localStorage.getItem(PEND_KEY) || '{}');
   function renderPendientes(){
     const cont = document.getElementById('pendientes');
