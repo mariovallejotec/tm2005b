@@ -137,6 +137,8 @@
   .nj-txt{flex:1;font-size:14.5px;line-height:1.5;color:var(--tinta);white-space:pre-wrap;}
   .nj-del{flex:none;background:none;border:none;color:#c0392b;font-size:16px;cursor:pointer;opacity:.45;padding:0 4px;line-height:1;}
   .nj-del:hover{opacity:1;}
+  .nj-ultima-ta{width:100%;min-height:120px;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 13px;font-size:14.5px;font-family:inherit;line-height:1.55;resize:vertical;background:#fff;}
+  .nj-ultima-ta:focus{outline:none;border-color:var(--verde);}
 
   @media(max-width:900px){ .calgrid{grid-template-columns:repeat(2,1fr);} }
 
@@ -214,6 +216,14 @@
         <button class="nj-add" onclick="addNota()">Agregar nota</button>
       </div>
       <div class="nj-list" id="njList"></div>
+    </div>
+  </div>
+
+  <!-- NOTAS DE ÚLTIMA JUNTA -->
+  <div class="acc fixed open">
+    <div class="acc-head"><h2>📝 Notas de última junta</h2></div>
+    <div class="acc-body">
+      <textarea id="njUltimaTexto" class="nj-ultima-ta" placeholder="Escribe aquí las notas de la última junta…"></textarea>
     </div>
   </div>
 
@@ -430,7 +440,8 @@
     localStorage.setItem(ORDEN_KEY, JSON.stringify(temasOrden));
     localStorage.setItem(PEND_KEY, JSON.stringify(pendEstado));
     localStorage.setItem(NJ_KEY, JSON.stringify(notasJunta));
-    if(USE_FB && fbRef) fbRef.set({asignaciones: saved, temas: temasOrden, pendientes: pendEstado, notasJunta: notasJunta});
+    localStorage.setItem(NJ_ULTIMA_KEY, notasUltima);
+    if(USE_FB && fbRef) fbRef.set({asignaciones: saved, temas: temasOrden, pendientes: pendEstado, notasJunta: notasJunta, notasUltima: notasUltima});
   }
   function refresh(){ renderBulk(); renderCal(); updateBalance(); }
 
@@ -594,6 +605,8 @@
   // ---- Notas para platicar en la junta (lunes 6 jul, 11:00 am) ----
   const NJ_KEY = 'tm2005b_notasjunta';
   let notasJunta = JSON.parse(localStorage.getItem(NJ_KEY) || '[]');
+  const NJ_ULTIMA_KEY = 'tm2005b_notasultima';
+  let notasUltima = localStorage.getItem(NJ_ULTIMA_KEY) || '';
   let njAutor = 'Mario';
   function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
   function setNjAutor(a){
@@ -626,10 +639,23 @@
     }).join('');
   }
 
+  // ---- Notas de última junta (texto libre, sincronizado) ----
+  const njUltimaTA = document.getElementById('njUltimaTexto');
+  function renderNotasUltima(){
+    if(document.activeElement !== njUltimaTA) njUltimaTA.value = notasUltima;
+  }
+  let njUltimaTimer = null;
+  njUltimaTA.addEventListener('input', () => {
+    notasUltima = njUltimaTA.value;
+    clearTimeout(njUltimaTimer);
+    njUltimaTimer = setTimeout(persist, 350);
+  });
+
   refresh();                          // pinta de inmediato (localStorage o vacío)
   renderPendientes();
   setNjAutor('Mario');
   renderNotasJunta();
+  renderNotasUltima();
 
   if(USE_FB){                         // si hay Firebase, conecta y sincroniza en vivo
     firebase.initializeApp(firebaseConfig);
@@ -641,11 +667,14 @@
         temasOrden = (Array.isArray(e.temas) && e.temas.length === TEMAS_DEFAULT.length) ? e.temas : TEMAS_DEFAULT.map((_,i)=>i);
         pendEstado = e.pendientes || {};
         notasJunta = Array.isArray(e.notasJunta) ? e.notasJunta : [];
+        notasUltima = typeof e.notasUltima === 'string' ? e.notasUltima : '';
+        localStorage.setItem(NJ_ULTIMA_KEY, notasUltima);
         refresh();
         renderPendientes();
         renderNotasJunta();
+        renderNotasUltima();
       } else {
-        fbRef.set({asignaciones: saved, temas: temasOrden, pendientes: pendEstado, notasJunta: notasJunta});
+        fbRef.set({asignaciones: saved, temas: temasOrden, pendientes: pendEstado, notasJunta: notasJunta, notasUltima: notasUltima});
       }
     });
   }
