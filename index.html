@@ -311,6 +311,7 @@
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script>
   // ---- Acceso con contraseña (gate simple) ----
   const GATE_PW = "MarEnTM2005";
@@ -659,23 +660,25 @@
 
   if(USE_FB){                         // si hay Firebase, conecta y sincroniza en vivo
     firebase.initializeApp(firebaseConfig);
-    fbRef = firebase.database().ref('tm2005b/estado');
-    fbRef.on('value', function(snap){
-      const e = snap.val();
-      if(e){
-        saved = e.asignaciones || {};
-        temasOrden = (Array.isArray(e.temas) && e.temas.length === TEMAS_DEFAULT.length) ? e.temas : TEMAS_DEFAULT.map((_,i)=>i);
-        pendEstado = e.pendientes || {};
-        notasJunta = Array.isArray(e.notasJunta) ? e.notasJunta : [];
-        notasUltima = typeof e.notasUltima === 'string' ? e.notasUltima : '';
-        localStorage.setItem(NJ_ULTIMA_KEY, notasUltima);
-        refresh();
-        renderPendientes();
-        renderNotasJunta();
-        renderNotasUltima();
-      } else {
-        fbRef.set({asignaciones: saved, temas: temasOrden, pendientes: pendEstado, notasJunta: notasJunta, notasUltima: notasUltima});
-      }
+    firebase.auth().signInAnonymously().then(function(){
+      fbRef = firebase.database().ref('tm2005b/estado');
+      fbRef.on('value', function(snap){
+        const e = snap.val();
+        if(e){
+          saved = e.asignaciones || {};
+          temasOrden = (Array.isArray(e.temas) && e.temas.length === TEMAS_DEFAULT.length) ? e.temas : TEMAS_DEFAULT.map((_,i)=>i);
+          pendEstado = e.pendientes || {};
+          notasJunta = Array.isArray(e.notasJunta) ? e.notasJunta : [];
+          notasUltima = typeof e.notasUltima === 'string' ? e.notasUltima : '';
+          localStorage.setItem(NJ_ULTIMA_KEY, notasUltima);
+          refresh();
+          renderPendientes();
+          renderNotasJunta();
+          renderNotasUltima();
+        } else {
+          fbRef.set({asignaciones: saved, temas: temasOrden, pendientes: pendEstado, notasJunta: notasJunta, notasUltima: notasUltima});
+        }
+      });
     });
   }
 </script>
