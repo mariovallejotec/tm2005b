@@ -201,14 +201,12 @@
     </div>
   </div>
 
-  <!-- NOTAS -->
+  <!-- NOTAS GENERALES -->
   <div class="acc fixed open">
-    <div class="acc-head"><h2>Notas</h2></div>
+    <div class="acc-head"><h2>Notas generales</h2></div>
     <div class="acc-body">
       <p class="lead"><b>Horario:</b> martes, miércoles y viernes de 3 a 7 en el estudio (4 h); lunes y jueves de 5 a 7 en las computadoras (2 h). 16 h por semana · 25 clases en 5 semanas · del 10 de agosto al 11 de septiembre de 2026.</p>
-      <p class="lead"><b>Reparto Mario / Enrique:</b> con los botones de arriba del calendario asignas un día de la semana completo a uno de los dos; con el selector de cada clase lo ajustas individualmente. El balance de arriba se calcula por horas.</p>
       <p class="lead"><b>Coordinación:</b> Mario es el coordinador del bloque.</p>
-      <p class="lead"><b>Impartición de los temas:</b> se acordó que todos los temas se vean pero de forma superficial (por ejemplo, sin necesariamente abrir el software o construir algo). El mayor énfasis de la clase está en lo que se relaciona con el proyecto (el reto).</p>
     </div>
   </div>
 
@@ -218,48 +216,27 @@
     <div class="acc-body"><div id="pendientes"></div></div>
   </div>
 
-  <!-- NOTAS PARA LA PRÓXIMA JUNTA -->
-  <div class="acc fixed open">
-    <div class="acc-head"><h2>🗓️ Notas para platicar en la junta del lunes 6 de julio · 11:00 am</h2></div>
+  <!-- NOTAS DE JUNTAS -->
+  <div class="acc">
+    <div class="acc-head"><h2>🗓️ Notas de juntas</h2><span class="chev">▶</span></div>
     <div class="acc-body">
-      <div class="nj-form">
-        <div class="nj-row">
-          <span class="nj-lbl">¿Quién anota?</span>
-          <button class="pbtn mario" id="njMario" onclick="setNjAutor('Mario')">Mario</button>
-          <button class="pbtn enrique" id="njEnrique" onclick="setNjAutor('Enrique')">Enrique</button>
+      <div class="grp">
+        <div class="grptitle"><span>Para platicar en la próxima junta</span></div>
+        <div class="nj-form">
+          <div class="nj-row">
+            <span class="nj-lbl">¿Quién anota?</span>
+            <button class="pbtn mario" id="njMario" onclick="setNjAutor('Mario')">Mario</button>
+            <button class="pbtn enrique" id="njEnrique" onclick="setNjAutor('Enrique')">Enrique</button>
+          </div>
+          <textarea id="njTexto" placeholder="Escribe la nota para la próxima junta…"></textarea>
+          <button class="nj-add" onclick="addNota()">Agregar nota</button>
         </div>
-        <textarea id="njTexto" placeholder="Escribe la nota para la próxima junta…"></textarea>
-        <button class="nj-add" onclick="addNota()">Agregar nota</button>
+        <div class="nj-list" id="njList"></div>
       </div>
-      <div class="nj-list" id="njList"></div>
-    </div>
-  </div>
 
-  <!-- NOTAS DE ÚLTIMA JUNTA -->
-  <div class="acc fixed open">
-    <div class="acc-head"><h2>📝 Notas de última junta</h2></div>
-    <div class="acc-body">
-      <textarea id="njUltimaTexto" class="nj-ultima-ta" placeholder="Escribe aquí las notas de la última junta…"></textarea>
-    </div>
-  </div>
-
-  <!-- TEMAS QUE QUEDAN FUERA (PROPUESTA DE ENRIQUE) -->
-  <div class="acc fixed open acc-amber">
-    <div class="acc-head"><h2>Temas que quedan fuera (propuesta de Enrique)</h2></div>
-    <div class="acc-body">
-      <p class="lead">Comparando la propuesta de sesiones de Enrique contra el analítico oficial, estos subtemas no aparecen mencionados en ninguna sesión:</p>
-      <div class="vrow head"><div>Tema del analítico</div><div></div></div>
-      <div class="vrow"><div class="vname">2.5 Mezcla</div><div></div></div>
-      <div class="vrow"><div class="vname">2.6 Integración de dispositivos móviles (Mob Mu Plat, Touch OSC)</div><div></div></div>
-      <div class="vrow"><div class="vname">2.7 Sensores electrónicos y transductores</div><div></div></div>
-      <div class="vrow"><div class="vname">3.3 Generación de formas de onda</div><div></div></div>
-      <div class="vrow"><div class="vname">4.3 Oscilador y procesos</div><div></div></div>
-      <div class="vrow"><div class="vname">4.5 Interfaces gráficas</div><div></div></div>
-      <div class="vrow"><div class="vname">5.1 Espacialización</div><div></div></div>
-      <div class="vrow"><div class="vname">5.4 Composición algorítmica</div><div></div></div>
-      <div class="nj-note" style="margin-top:14px;">
-        <span class="pend-who who-mario">Mario</span>
-        <span class="nj-txt">Concuerdo en que estos temas queden fuera. La clase dura solo 5 semanas y me parecen los menos relevantes para los objetivos de aprendizaje. Algunos ya están un poco obsoletos o no son necesarios para esta etapa.</span>
+      <div class="grp">
+        <div class="grptitle"><span>Notas de la última junta</span></div>
+        <textarea id="njUltimaTexto" class="nj-ultima-ta" placeholder="Escribe aquí las notas de la última junta…"></textarea>
       </div>
     </div>
   </div>
@@ -339,6 +316,27 @@
       <div class="evalrow"><span>Proyecto final (el reto)</span><b>60%</b></div>
       <div class="evalrow" style="font-weight:700;color:var(--tec);border-top:2px solid var(--gris-borde);margin-top:4px;padding-top:11px;"><span>Total</span><b style="color:var(--tec)">100%</b></div>
       <p class="eval-nota">Este reparto se actualizó con base en lo acordado en la junta del 25 de junio: cada esqueleto vale 10% (4 esqueletos = 40%) y el 60% restante es el proyecto final (el reto).</p>
+    </div>
+  </div>
+
+  <!-- TEMAS QUE QUEDAN FUERA (PROPUESTA DE ENRIQUE) -->
+  <div class="acc">
+    <div class="acc-head"><h2>Temas que quedan fuera (propuesta de Enrique)</h2><span class="chev">▶</span></div>
+    <div class="acc-body">
+      <p class="lead">Comparando la propuesta de sesiones de Enrique contra el analítico oficial, estos subtemas no aparecen mencionados en ninguna sesión:</p>
+      <div class="vrow head"><div>Tema del analítico</div><div></div></div>
+      <div class="vrow"><div class="vname">2.5 Mezcla</div><div></div></div>
+      <div class="vrow"><div class="vname">2.6 Integración de dispositivos móviles (Mob Mu Plat, Touch OSC)</div><div></div></div>
+      <div class="vrow"><div class="vname">2.7 Sensores electrónicos y transductores</div><div></div></div>
+      <div class="vrow"><div class="vname">3.3 Generación de formas de onda</div><div></div></div>
+      <div class="vrow"><div class="vname">4.3 Oscilador y procesos</div><div></div></div>
+      <div class="vrow"><div class="vname">4.5 Interfaces gráficas</div><div></div></div>
+      <div class="vrow"><div class="vname">5.1 Espacialización</div><div></div></div>
+      <div class="vrow"><div class="vname">5.4 Composición algorítmica</div><div></div></div>
+      <div class="nj-note" style="margin-top:14px;">
+        <span class="pend-who who-mario">Mario</span>
+        <span class="nj-txt">Concuerdo en que estos temas queden fuera. La clase dura solo 5 semanas y me parecen los menos relevantes para los objetivos de aprendizaje. Algunos ya están un poco obsoletos o no son necesarios para esta etapa.</span>
+      </div>
     </div>
   </div>
 
