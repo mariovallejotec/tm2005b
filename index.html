@@ -206,9 +206,9 @@
     <button class="tripanel-card" onclick="openModal('balance')">⚖️<span>Balance de carga</span></button>
     <button class="tripanel-card" onclick="openModal('notas')">📋<span>Notas generales</span></button>
     <button class="tripanel-card pulse" onclick="openModal('pendientes')">⚠️<span>Pendientes</span>⚠️</button>
-    <button class="tripanel-card" onclick="openModal('juntas')">🗓️<span>Notas de juntas</span></button>
-    <button class="tripanel-card" onclick="openModal('reto')">🎛️<span>El Reto</span></button>
-    <button class="tripanel-card" onclick="openModal('evaluacion')">📊<span>Evaluación</span></button>
+    <button class="tripanel-card" onclick="openModal('ultimajunta')">📝<span>Notas de la última junta</span></button>
+    <button class="tripanel-card pulse" onclick="openModal('proxjunta')">⚠️<span>Cosas por ver en la próxima junta</span>⚠️</button>
+    <button class="tripanel-card" onclick="openModal('reto')">🎛️<span>El Reto y Evaluación</span></button>
   </div>
 
   <div class="modal-backdrop" id="modal-balance" onclick="if(event.target===this) closeModal('balance')">
@@ -245,28 +245,28 @@
     </div>
   </div>
 
-  <div class="modal-backdrop" id="modal-juntas" onclick="if(event.target===this) closeModal('juntas')">
+  <div class="modal-backdrop" id="modal-proxjunta" onclick="if(event.target===this) closeModal('proxjunta')">
     <div class="modal-box">
-      <button class="modal-close" onclick="closeModal('juntas')">✕</button>
-      <h2>🗓️ Notas de juntas</h2>
-      <div class="grp">
-        <div class="grptitle"><span>Para platicar en la próxima junta</span></div>
-        <div class="nj-form">
-          <div class="nj-row">
-            <span class="nj-lbl">¿Quién anota?</span>
-            <button class="pbtn mario" id="njMario" onclick="setNjAutor('Mario')">Mario</button>
-            <button class="pbtn enrique" id="njEnrique" onclick="setNjAutor('Enrique')">Enrique</button>
-          </div>
-          <textarea id="njTexto" placeholder="Escribe la nota para la próxima junta…"></textarea>
-          <button class="nj-add" onclick="addNota()">Agregar nota</button>
+      <button class="modal-close" onclick="closeModal('proxjunta')">✕</button>
+      <h2>🗓️ Para platicar en la próxima junta</h2>
+      <div class="nj-form">
+        <div class="nj-row">
+          <span class="nj-lbl">¿Quién anota?</span>
+          <button class="pbtn mario" id="njMario" onclick="setNjAutor('Mario')">Mario</button>
+          <button class="pbtn enrique" id="njEnrique" onclick="setNjAutor('Enrique')">Enrique</button>
         </div>
-        <div class="nj-list" id="njList"></div>
+        <textarea id="njTexto" placeholder="Escribe la nota para la próxima junta…"></textarea>
+        <button class="nj-add" onclick="addNota()">Agregar nota</button>
       </div>
+      <div class="nj-list" id="njList"></div>
+    </div>
+  </div>
 
-      <div class="grp">
-        <div class="grptitle"><span>Notas de la última junta</span></div>
-        <textarea id="njUltimaTexto" class="nj-ultima-ta" placeholder="Escribe aquí las notas de la última junta…"></textarea>
-      </div>
+  <div class="modal-backdrop" id="modal-ultimajunta" onclick="if(event.target===this) closeModal('ultimajunta')">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal('ultimajunta')">✕</button>
+      <h2>📝 Notas de la última junta</h2>
+      <textarea id="njUltimaTexto" class="nj-ultima-ta" placeholder="Escribe aquí las notas de la última junta…"></textarea>
     </div>
   </div>
 
@@ -307,20 +307,17 @@
         <div class="grptitle"><span>Uso de los esqueletos en el reto</span></div>
         <p class="lead">Los alumnos conectan dos o más esqueletos y los usan para tocar en su reto, o toman uno solo y lo expanden de alguna forma.</p>
       </div>
-    </div>
-  </div>
 
-  <div class="modal-backdrop" id="modal-evaluacion" onclick="if(event.target===this) closeModal('evaluacion')">
-    <div class="modal-box">
-      <button class="modal-close" onclick="closeModal('evaluacion')">✕</button>
-      <h2>Evaluación</h2>
-      <div class="evalrow"><span>Esqueleto 1</span><b>10%</b></div>
-      <div class="evalrow"><span>Esqueleto 2</span><b>10%</b></div>
-      <div class="evalrow"><span>Esqueleto 3</span><b>10%</b></div>
-      <div class="evalrow"><span>Esqueleto 4</span><b>10%</b></div>
-      <div class="evalrow"><span>Proyecto final (el reto)</span><b>60%</b></div>
-      <div class="evalrow" style="font-weight:700;color:var(--tec);border-top:2px solid var(--gris-borde);margin-top:4px;padding-top:11px;"><span>Total</span><b style="color:var(--tec)">100%</b></div>
-      <p class="eval-nota">Este reparto se actualizó con base en lo acordado en la junta del 25 de junio: cada esqueleto vale 10% (4 esqueletos = 40%) y el 60% restante es el proyecto final (el reto).</p>
+      <div class="grp">
+        <div class="grptitle"><span>Evaluación</span></div>
+        <div class="evalrow"><span>Esqueleto 1</span><b>10%</b></div>
+        <div class="evalrow"><span>Esqueleto 2</span><b>10%</b></div>
+        <div class="evalrow"><span>Esqueleto 3</span><b>10%</b></div>
+        <div class="evalrow"><span>Esqueleto 4</span><b>10%</b></div>
+        <div class="evalrow"><span>Proyecto final (el reto)</span><b>60%</b></div>
+        <div class="evalrow" style="font-weight:700;color:var(--tec);border-top:2px solid var(--gris-borde);margin-top:4px;padding-top:11px;"><span>Total</span><b style="color:var(--tec)">100%</b></div>
+        <p class="eval-nota">Este reparto se actualizó con base en lo acordado en la junta del 25 de junio: cada esqueleto vale 10% (4 esqueletos = 40%) y el 60% restante es el proyecto final (el reto).</p>
+      </div>
     </div>
   </div>
 
