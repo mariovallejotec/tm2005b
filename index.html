@@ -132,6 +132,7 @@
   .tbadge{display:inline-block;font-size:10.5px;font-weight:800;background:#fff;border:1px solid #e6ebe8;border-radius:99px;padding:2px 9px;}
   .tema-cont{font-size:12.5px;color:var(--gris);line-height:1.45;margin-top:6px;}
   .tema-ref{font-size:11px;font-style:italic;color:#8a94a6;line-height:1.4;margin-top:5px;}
+  .dc-conn{position:absolute;top:0;right:-10px;width:10px;height:4px;z-index:2;}
   .evalrow{display:flex;justify-content:space-between;gap:20px;font-size:15px;padding:7px 0;border-bottom:1px solid #f0f2f1;max-width:560px;}
   .evalrow:last-child{border-bottom:none;}
   .evalrow b{color:var(--verde);}
@@ -487,7 +488,7 @@
   }
   function refresh(){ renderBulk(); renderCal(); updateBalance(); }
 
-  function dayCard(p){
+  function dayCard(p, connColor){
     const d    = ALLDAYS[p];
     const tb   = TEMAS_DEFAULT[temasOrden[p]];
     const t    = TEMA[tb.tema];
@@ -495,8 +496,14 @@
     const whoLbl = quien==='mario' ? 'Mario' : 'Enrique';
     const tipoCls = 'tipo-'+(tb.tipo||'teorica');
     const tipoLbl = tb.tipoLbl || TIPO_LBL[tb.tipo] || 'Teórica';
-    const esqStyle = tb.esq ? ' style="border-top:4px solid '+ESQ_COLOR[tb.esq]+'"' : '';
-    return '<div class="daycard '+tipoCls+'"'+esqStyle+'>'
+    const esqCol = tb.esq ? ESQ_COLOR[tb.esq] : null;
+    let styleParts = [];
+    if(esqCol) styleParts.push('border-top:4px solid '+esqCol);
+    if(connColor) styleParts.push('position:relative');
+    const cardStyle = styleParts.length ? ' style="'+styleParts.join(';')+'"' : '';
+    const connector = connColor ? '<div class="dc-conn" style="background:'+connColor+'"></div>' : '';
+    return '<div class="daycard '+tipoCls+'"'+cardStyle+'>'
+      + connector
       + '<div class="dc-toprow">'
       +   '<div><div class="dc-day">'+d.day+'</div><div class="dc-meta">'+d.meta+'</div></div>'
       +   '<span class="dc-who who-'+quien+'">'+whoLbl+'</span>'
@@ -516,7 +523,13 @@
     let html = '', p = 0;
     WEEKS.forEach(w => {
       html += '<div class="calweek"><h3>'+w.label+'</h3><div class="calgrid">';
-      w.days.forEach(() => { html += dayCard(p); p++; });
+      w.days.forEach((_, j) => {
+        const tb = TEMAS_DEFAULT[temasOrden[p]];
+        const nextTb = (j < w.days.length-1) ? TEMAS_DEFAULT[temasOrden[p+1]] : null;
+        const connColor = (tb.esq && nextTb && nextTb.esq === tb.esq) ? ESQ_COLOR[tb.esq] : null;
+        html += dayCard(p, connColor);
+        p++;
+      });
       html += '</div></div>';
     });
     const cal = document.getElementById('cal');
