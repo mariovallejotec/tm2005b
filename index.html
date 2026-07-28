@@ -227,6 +227,30 @@
     </div>
   </div>
 
+  <!-- TEMAS QUE QUEDAN FUERA (PROPUESTA DE ENRIQUE) -->
+  <div class="acc fixed open acc-amber">
+    <div class="acc-head"><h2>Temas que quedan fuera (propuesta de Enrique)</h2></div>
+    <div class="acc-body">
+      <p class="lead">Comparando la propuesta de sesiones de Enrique contra el analítico oficial, estos subtemas no aparecen mencionados en ninguna sesión:</p>
+      <div class="vrow head"><div>Tema del analítico</div><div></div></div>
+      <div class="vrow"><div class="vname">2.5 Mezcla</div><div></div></div>
+      <div class="vrow"><div class="vname">2.6 Integración de dispositivos móviles (Mob Mu Plat, Touch OSC)</div><div></div></div>
+      <div class="vrow"><div class="vname">2.7 Sensores electrónicos y transductores</div><div></div></div>
+      <div class="vrow"><div class="vname">3.1 Introducción a C++</div><div></div></div>
+      <div class="vrow"><div class="vname">3.3 Generación de formas de onda</div><div></div></div>
+      <div class="vrow"><div class="vname">4.2 Introducción a HTML y CSS</div><div></div></div>
+      <div class="vrow"><div class="vname">4.3 Oscilador y procesos</div><div></div></div>
+      <div class="vrow"><div class="vname">4.4 Carga y reproductor de audio en web</div><div></div></div>
+      <div class="vrow"><div class="vname">4.5 Interfaces gráficas</div><div></div></div>
+      <div class="vrow"><div class="vname">5.1 Espacialización</div><div></div></div>
+      <div class="vrow"><div class="vname">5.4 Composición algorítmica</div><div></div></div>
+      <div class="nj-note" style="margin-top:14px;">
+        <span class="pend-who who-mario">Mario</span>
+        <span class="nj-txt">Concuerdo en que estos temas queden fuera. La clase dura solo 5 semanas y me parecen los menos relevantes para los objetivos de aprendizaje. Algunos ya están un poco obsoletos o no son necesarios para esta etapa. Que no se tome como un ataque, solo quiero dejarlo preciso.</span>
+      </div>
+    </div>
+  </div>
+
   <!-- EL RETO -->
   <div class="acc">
     <div class="acc-head"><h2>El Reto · concierto con Max for Live</h2><span class="chev">▶</span></div>
@@ -396,33 +420,33 @@
     ]}
   ];
 
-  // Temas (un tema por sesión) en su orden inicial. Se pueden mover por drag and drop.
+  // Temas (un tema por sesión) — distribución propuesta por Enrique (nota del 6-jul). Se pueden mover por drag and drop.
   const TEMAS_DEFAULT = [
-    {tema:'T1',  cont:'1.1 Historia y arquitecturas de la computación.'},
-    {tema:'T1',  cont:'1.2 Audio digital (DAC/ADC, Nyquist, cuantización, FFT).'},
-    {tema:'T1',  cont:'Cierre T1 · 1.3 Protocolos OSC y MIDI → inicio T2.'},
-    {tema:'T2',  cont:'2.1 Síntesis y procesamiento de señales en Pure Data / MAX.'},
-    {tema:'T2',  cont:'2.2 Síntesis aditiva · 2.3 Síntesis sustractiva (filtros).'},
-    {tema:'T2',  cont:'2.4 Síntesis AM y FM · 2.5 Mezcla.'},
-    {tema:'T2',  cont:'2.6 Dispositivos móviles (Mob Mu Plat, Touch OSC).'},
-    {tema:'T2',  cont:'Cierre T2 · 2.7 Sensores y transductores → inicio T3.'},
-    {tema:'T3',  cont:'3.1 Introducción a C++.'},
-    {tema:'T3',  cont:'3.1 C++ (condicionales, ciclos, funciones, WAV).'},
-    {tema:'T3',  cont:'3.2 JUCE (Projucer, app stand-alone).'},
-    {tema:'T3',  cont:'Cierre T3 · 3.2 plugins VST3/AU · 3.3 generación de formas de onda.'},
-    {tema:'T4',  cont:'4.1 JavaScript y Web Audio API.'},
-    {tema:'T4',  cont:'4.2 HTML y CSS · 4.3 oscilador y procesos.'},
-    {tema:'T4',  cont:'4.3 efectos (reverb, delay, compresión).'},
-    {tema:'T4',  cont:'4.4 carga y reproductor de audio en web.'},
-    {tema:'T4',  cont:'Cierre T4 · 4.5 interfaces gráficas → inicio T5.'},
-    {tema:'T5',  cont:'Espacialización, IA, nuevas interfaces, composición algorítmica → inicio Reto.'},
-    {tema:'RETO',cont:'Trabajo de reto (concierto Max for Live).'},
-    {tema:'RETO',cont:'Trabajo de reto (concierto Max for Live).'},
-    {tema:'RETO',cont:'Trabajo de reto (concierto Max for Live).'},
-    {tema:'RETO',cont:'Cierre del reto → inicio seguimiento y evaluación.'},
-    {tema:'EVAL',cont:'Seguimiento y evaluación (entregables).'},
-    {tema:'EVAL',cont:'Entrega del proyecto final.'},
-    {tema:'EVAL',cont:'Clase de cierre / despedida.'}
+    {tema:'T1',  cont:'Introducción a la clase + intro a la computación. (Enrique)'},
+    {tema:'T1',  cont:'Audio digital + intro a programación de audio, sin tocar Max. (Enrique)'},
+    {tema:'T2',  cont:'Intro a Max. (Mario, propuesta)'},
+    {tema:'T1',  cont:'MIDI. (Mario, propuesta)'},
+    {tema:'T1',  cont:'Ejercicio — Esqueleto 1: arpegiador MIDI, sin entrar a síntesis. (Mario, propuesta)'},
+    {tema:'T2',  cont:'Principios de síntesis. (Enrique)'},
+    {tema:'T2',  cont:'Síntesis aditiva y sustractiva. (Enrique)'},
+    {tema:'T2',  cont:'Síntesis AM/FM y otros tipos, complemento. (Mario, propuesta)'},
+    {tema:'T2',  cont:'Síntesis AM/FM, continuación · preparación de práctica. (Mario, propuesta)'},
+    {tema:'T2',  cont:'Práctica — Esqueleto 2: sintetizador. (Enrique)'},
+    {tema:'T3',  cont:'Introducción a DSP. (Enrique)'},
+    {tema:'T3',  cont:'Plugins, posible invitado Ear Candy u otro. (Enrique)'},
+    {tema:'T3',  cont:'Creación del efecto — Esqueleto 3, parte 1. (Mario, propuesta)'},
+    {tema:'T3',  cont:'Creación del efecto, parte 2. (Mario, propuesta)'},
+    {tema:'T3',  cont:'Creación del efecto — cierre / entrega. (Mario, propuesta)'},
+    {tema:'T4',  cont:'Sonido en web. (Enrique)'},
+    {tema:'T5',  cont:'Nuevas interfaces. (Enrique)'},
+    {tema:'T5',  cont:'IA. (Mario, propuesta)'},
+    {tema:'RETO',cont:'Práctica — Esqueleto 4: detección de gestos. (Enrique)'},
+    {tema:'RETO',cont:'Arranca trabajo en el Reto. (Enrique)'},
+    {tema:'RETO',cont:'Trabajo en el Reto. (Mario)'},
+    {tema:'RETO',cont:'Trabajo en el Reto. (Mario)'},
+    {tema:'RETO',cont:'Trabajo en el Reto / evaluación. (Enrique)'},
+    {tema:'EVAL',cont:'Presentación final del Reto, concierto. (Enrique)'},
+    {tema:'EVAL',cont:'Clase de cierre / despedida. (Mario)'}
   ];
 
   const ALLDAYS = WEEKS.flatMap(w => w.days);
