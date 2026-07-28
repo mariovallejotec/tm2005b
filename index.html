@@ -107,6 +107,7 @@
   .daycard.tipo-actividad{border-color:#f3d79a;background:var(--amber-soft);}
   .daycard.tipo-revision{border-color:var(--azul-borde);background:var(--azul-soft);}
   .daycard.tipo-ultima{border-color:#e8b7cd;background:#fbeef4;}
+  .daycard.tipo-teorica-esqueleto{border-color:#d9c9a8;background:linear-gradient(90deg,#f5f2fd 50%,#fff7e6 50%);}
   .dc-toprow{display:flex;justify-content:space-between;align-items:flex-start;gap:6px;}
   .dc-day{font-size:14px;font-weight:800;color:var(--tec);}
   .dc-meta{font-size:10.5px;color:var(--gris);font-weight:600;}
@@ -117,6 +118,7 @@
   .dc-tipo.tipo-actividad{background:var(--amber-soft);color:#9a6700;}
   .dc-tipo.tipo-revision{background:var(--azul-soft);color:var(--azul);}
   .dc-tipo.tipo-ultima{background:#f3d9e4;color:#a0295b;}
+  .dc-tipo.tipo-teorica-esqueleto{background:linear-gradient(90deg,#e7defa 50%,#ffedb3 50%);color:#5b3a1a;}
   .temabox{position:relative;flex:1;border:1.5px solid var(--gris-borde);border-radius:10px;background:#fff;padding:9px 26px 10px 11px;cursor:grab;box-shadow:0 1px 3px rgba(0,0,0,.06);transition:transform .1s,box-shadow .12s,border-color .12s;}
   .temabox:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(10,61,44,.16);border-color:var(--verde-borde);}
   .temabox:active{cursor:grabbing;}
@@ -434,12 +436,12 @@
     {tema:'T1',  quien:'enrique', tipo:'teorica', cont:'Audio digital + intro a programación de audio, sin tocar Max.', ref:'1.2 Audio Digital.'},
     {tema:'T2',  quien:'mario', tipo:'teorica', cont:'Intro a Max.', ref:'2.1 Síntesis y procesamiento de señales en Pure Data/MAX.'},
     {tema:'T1',  quien:'mario', tipo:'teorica', cont:'MIDI.', ref:'1.3 Protocolos OSC y MIDI.'},
-    {tema:'T1',  quien:'mario', tipo:'actividad', cont:'Ejercicio — Esqueleto 1: arpegiador MIDI, sin entrar a síntesis.', ref:'Práctica de 1.3 Protocolos OSC y MIDI.'},
+    {tema:'T1',  quien:'mario', tipo:'actividad', cont:'Esqueleto 1: arpegiador MIDI, sin entrar a síntesis.', ref:'Práctica de 1.3 Protocolos OSC y MIDI.'},
     {tema:'T2',  quien:'enrique', tipo:'teorica', cont:'Principios de síntesis.', ref:'2.1 Síntesis y procesamiento de señales.'},
     {tema:'T2',  quien:'enrique', tipo:'teorica', cont:'Síntesis aditiva y sustractiva.', ref:'2.2 Síntesis Aditiva · 2.3 Síntesis Sustractiva.'},
     {tema:'T2',  quien:'mario', tipo:'teorica', cont:'Síntesis AM/FM y otros tipos, complemento.', ref:'2.4 Síntesis AM y FM.'},
-    {tema:'T2',  quien:'mario', tipo:'actividad', cont:'Síntesis AM/FM, continuación · preparación de práctica.', ref:'2.4 Síntesis AM y FM (continuación).'},
-    {tema:'T2',  quien:'enrique', tipo:'actividad', cont:'Práctica — Esqueleto 2: sintetizador.', ref:'Práctica de 2.1–2.4 Síntesis.'},
+    {tema:'T2',  quien:'mario', tipo:'teorica-esqueleto', cont:'Síntesis AM/FM, continuación · Esqueleto 2: sintetizador.', ref:'2.4 Síntesis AM y FM (continuación).'},
+    {tema:'T2',  quien:'enrique', tipo:'actividad', cont:'Esqueleto 2: sintetizador, continuación.', ref:'Práctica de 2.1–2.4 Síntesis.'},
     {tema:'T3',  quien:'enrique', tipo:'teorica', cont:'Introducción a DSP.', ref:'3.1 Introducción a C++.'},
     {tema:'T3',  quien:'enrique', tipo:'presentacion', cont:'Plugins, posible invitado Ear Candy u otro.', ref:'3.2 JUCE.'},
     {tema:'T3',  quien:'mario', tipo:'actividad', cont:'Creación del efecto — Esqueleto 3, parte 1.', ref:'Práctica de Tema 3 · Programación de audio para plugins.'},
@@ -448,7 +450,7 @@
     {tema:'T4',  quien:'enrique', tipo:'teorica', cont:'Sonido en web.', ref:'4.1 Javascript y Web Audio API · 4.2 Introducción a HTML y CSS · 4.4 Carga y reproductor de audio en web.'},
     {tema:'T5',  quien:'enrique', tipo:'teorica', cont:'Nuevas interfaces.', ref:'5.3 Nuevas interfaces.'},
     {tema:'T5',  quien:'mario', tipo:'teorica', cont:'IA.', ref:'5.2 Inteligencia artificial.'},
-    {tema:'RETO',quien:'enrique', tipo:'actividad', cont:'Práctica — Esqueleto 4: detección de gestos.', ref:'Práctica de 5.3 Nuevas interfaces.'},
+    {tema:'RETO',quien:'enrique', tipo:'actividad', cont:'Esqueleto 4: detección de gestos.', ref:'Práctica de 5.3 Nuevas interfaces.'},
     {tema:'RETO',quien:'enrique', tipo:'actividad', cont:'Arranca apoyo a los alumnos con su reto.', ref:'Reto (sin tema del analítico asociado).'},
     {tema:'RETO',quien:'mario', tipo:'actividad', cont:'Apoyo a los alumnos con su reto.', ref:'Reto (sin tema del analítico asociado).'},
     {tema:'RETO',quien:'mario', tipo:'actividad', cont:'Apoyo a los alumnos con su reto.', ref:'Reto (sin tema del analítico asociado).'},
@@ -457,7 +459,7 @@
     {tema:'EVAL',quien:'mario', tipo:'ultima', cont:'Clase de cierre / despedida.', ref:'Evaluación (sin tema del analítico asociado).'}
   ];
 
-  const TIPO_LBL = {teorica:'Teórica', presentacion:'Clase invitado', actividad:'Esqueleto', revision:'Revisión', ultima:'Última clase'};
+  const TIPO_LBL = {teorica:'Teórica', presentacion:'Clase invitado', actividad:'Esqueleto', revision:'Revisión', ultima:'Última clase', 'teorica-esqueleto':'Teoría/Esqueleto'};
 
   const ALLDAYS = WEEKS.flatMap(w => w.days);
   const TOTAL = ALLDAYS.reduce((s,d) => s + d.h, 0);
