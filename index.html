@@ -108,6 +108,7 @@
   .daycard.tipo-revision{border-color:var(--azul-borde);background:var(--azul-soft);}
   .daycard.tipo-ultima{border-color:#e8b7cd;background:#fbeef4;}
   .daycard.tipo-teorica-esqueleto{border-color:#d9c9a8;background:linear-gradient(90deg,#f5f2fd 50%,#fff7e6 50%);}
+  .daycard.tipo-apoyo{border-color:#a9ded9;background:#e6f7f5;}
   .dc-toprow{display:flex;justify-content:space-between;align-items:flex-start;gap:6px;}
   .dc-day{font-size:14px;font-weight:800;color:var(--tec);}
   .dc-meta{font-size:10.5px;color:var(--gris);font-weight:600;}
@@ -119,6 +120,7 @@
   .dc-tipo.tipo-revision{background:var(--azul-soft);color:var(--azul);}
   .dc-tipo.tipo-ultima{background:#f3d9e4;color:#a0295b;}
   .dc-tipo.tipo-teorica-esqueleto{background:linear-gradient(90deg,#e7defa 50%,#ffedb3 50%);color:#5b3a1a;}
+  .dc-tipo.tipo-apoyo{background:#d3f0ec;color:#0e7c86;}
   .temabox{position:relative;flex:1;border:1.5px solid var(--gris-borde);border-radius:10px;background:#fff;padding:9px 26px 10px 11px;cursor:grab;box-shadow:0 1px 3px rgba(0,0,0,.06);transition:transform .1s,box-shadow .12s,border-color .12s;}
   .temabox:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(10,61,44,.16);border-color:var(--verde-borde);}
   .temabox:active{cursor:grabbing;}
@@ -451,15 +453,15 @@
     {tema:'T5',  quien:'enrique', tipo:'teorica', cont:'Nuevas interfaces.', ref:'5.3 Nuevas interfaces.'},
     {tema:'T5',  quien:'mario', tipo:'teorica', cont:'IA.', ref:'5.2 Inteligencia artificial.'},
     {tema:'RETO',quien:'enrique', tipo:'actividad', tipoLbl:'Esqueleto 4', cont:'ESQUELETO 4: detección de gestos.', ref:'Práctica de 5.3 Nuevas interfaces.'},
-    {tema:'RETO',quien:'enrique', tipo:'actividad', tipoLbl:'Apoyo a proyectos finales', cont:'Apoyo a los alumnos con su reto.', ref:'Reto (sin tema del analítico asociado).'},
-    {tema:'RETO',quien:'mario', tipo:'actividad', tipoLbl:'Apoyo a proyectos finales', cont:'Apoyo a los alumnos con su reto.', ref:'Reto (sin tema del analítico asociado).'},
-    {tema:'RETO',quien:'mario', tipo:'actividad', tipoLbl:'Apoyo a proyectos finales', cont:'Apoyo a los alumnos con su reto.', ref:'Reto (sin tema del analítico asociado).'},
-    {tema:'RETO',quien:'enrique', tipo:'revision', tipoLbl:'Apoyo a proyectos finales', cont:'Apoyo a los alumnos con su reto / evaluación.', ref:'Reto / evaluación (sin tema del analítico asociado).'},
+    {tema:'RETO',quien:'enrique', tipo:'apoyo', cont:'Apoyo a los alumnos con su reto.', ref:'Reto (sin tema del analítico asociado).'},
+    {tema:'RETO',quien:'mario', tipo:'apoyo', cont:'Apoyo a los alumnos con su reto.', ref:'Reto (sin tema del analítico asociado).'},
+    {tema:'RETO',quien:'mario', tipo:'apoyo', cont:'Apoyo a los alumnos con su reto.', ref:'Reto (sin tema del analítico asociado).'},
+    {tema:'RETO',quien:'enrique', tipo:'apoyo', cont:'Apoyo a los alumnos con su reto / evaluación.', ref:'Reto / evaluación (sin tema del analítico asociado).'},
     {tema:'EVAL',quien:'enrique', tipo:'presentacion', cont:'Presentación final del Reto, concierto.', ref:'Evaluación (sin tema del analítico asociado).'},
     {tema:'EVAL',quien:'mario', tipo:'ultima', cont:'Clase de cierre / despedida.', ref:'Evaluación (sin tema del analítico asociado).'}
   ];
 
-  const TIPO_LBL = {teorica:'Teórica', presentacion:'Clase invitado', actividad:'Esqueleto', revision:'Revisión', ultima:'Última clase', 'teorica-esqueleto':'Teoría/Esqueleto'};
+  const TIPO_LBL = {teorica:'Teórica', presentacion:'Clase invitado', actividad:'Esqueleto', revision:'Revisión', ultima:'Última clase', 'teorica-esqueleto':'Teoría/Esqueleto', apoyo:'Apoyo a proyectos finales'};
 
   const ALLDAYS = WEEKS.flatMap(w => w.days);
   const TOTAL = ALLDAYS.reduce((s,d) => s + d.h, 0);
