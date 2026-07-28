@@ -588,7 +588,11 @@
     head.addEventListener('click', () => {
       const acc = head.parentElement; const wasOpen = acc.classList.contains('open');
       document.querySelectorAll('.acc:not(.fixed)').forEach(a => a.classList.remove('open'));
-      if(!wasOpen) acc.classList.add('open');
+      if(!wasOpen){
+        acc.classList.add('open');
+        // en pantallas chicas, llevar el bloque a la vista para que no se sienta "atrapado" abajo
+        setTimeout(() => head.scrollIntoView({behavior:'smooth', block:'start'}), 260);
+      }
     });
   });
 
