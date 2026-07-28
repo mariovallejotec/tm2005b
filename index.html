@@ -123,12 +123,7 @@
   .dc-tipo.tipo-teorica-esqueleto{background:linear-gradient(90deg,#e7defa 50%,#ffedb3 50%);color:#5b3a1a;}
   .dc-tipo.tipo-apoyo{background:#d3f0ec;color:#0e7c86;}
   .dc-tipo.tipo-final{background:#f8d0d0;color:#a13a3a;}
-  .temabox{position:relative;flex:1;border:1.5px solid var(--gris-borde);border-radius:10px;background:#fff;padding:9px 26px 10px 11px;cursor:grab;box-shadow:0 1px 3px rgba(0,0,0,.06);transition:transform .1s,box-shadow .12s,border-color .12s;}
-  .temabox:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(10,61,44,.16);border-color:var(--verde-borde);}
-  .temabox:active{cursor:grabbing;}
-  .temabox.dragging{opacity:.4;}
-  .temabox.dragover{border:2px dashed var(--verde);box-shadow:0 0 0 3px var(--verde-soft);}
-  .temabox .grip{position:absolute;top:8px;right:8px;color:#b6c2bc;font-size:14px;letter-spacing:-2px;}
+  .temabox{position:relative;flex:1;border:1.5px solid var(--gris-borde);border-radius:10px;background:#fff;padding:9px 11px 10px 11px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
   .tbadge{display:inline-block;font-size:10.5px;font-weight:800;background:#fff;border:1px solid #e6ebe8;border-radius:99px;padding:2px 9px;}
   .tema-cont{font-size:12.5px;color:var(--gris);line-height:1.45;margin-top:6px;}
   .tema-ref{font-size:11px;font-style:italic;color:#8a94a6;line-height:1.4;margin-top:5px;}
@@ -210,7 +205,7 @@
   <div class="tripanel">
     <button class="tripanel-card" onclick="openModal('balance')">⚖️<span>Balance de carga</span></button>
     <button class="tripanel-card" onclick="openModal('notas')">📋<span>Notas generales</span></button>
-    <button class="tripanel-card pulse" onclick="openModal('pendientes')">📌<span>Pendientes</span></button>
+    <button class="tripanel-card pulse" onclick="openModal('pendientes')">⚠️<span>Pendientes</span>⚠️</button>
     <button class="tripanel-card" onclick="openModal('juntas')">🗓️<span>Notas de juntas</span></button>
     <button class="tripanel-card" onclick="openModal('reto')">🎛️<span>El Reto</span></button>
     <button class="tripanel-card" onclick="openModal('evaluacion')">📊<span>Evaluación</span></button>
@@ -245,7 +240,7 @@
   <div class="modal-backdrop" id="modal-pendientes" onclick="if(event.target===this) closeModal('pendientes')">
     <div class="modal-box">
       <button class="modal-close" onclick="closeModal('pendientes')">✕</button>
-      <h2>📌 Pendientes 📌</h2>
+      <h2>⚠️ Pendientes ⚠️</h2>
       <div id="pendientes"></div>
     </div>
   </div>
@@ -547,8 +542,7 @@
       +   '<div><div class="dc-day">'+d.day+'</div><div class="dc-meta">'+d.meta+'</div></div>'
       +   '<span class="dc-who who-'+quien+'">'+whoLbl+'</span>'
       + '</div>'
-      + '<div class="temabox" draggable="true" data-pos="'+p+'" title="Arrastra este tema a otra sesión">'
-      +   '<span class="grip">⠿</span>'
+      + '<div class="temabox">'
       +   '<span class="tbadge" style="color:'+t.col+'">'+t.lbl+'</span>'
       +   '<div class="tema-cont">'+tb.cont+'</div>'
       +   (tb.ref ? '<div class="tema-ref">→ Analítico: '+tb.ref+'</div>' : '')
@@ -557,7 +551,6 @@
       + '</div>';
   }
 
-  let dragSrc = null;
   function renderCal(){
     let html = '', p = 0;
     WEEKS.forEach(w => {
@@ -571,32 +564,7 @@
       });
       html += '</div></div>';
     });
-    const cal = document.getElementById('cal');
-    cal.innerHTML = html;
-    cal.querySelectorAll('.temabox').forEach(box => {
-      box.addEventListener('dragstart', e => {
-        dragSrc = +box.dataset.pos;
-        box.classList.add('dragging');
-        e.dataTransfer.effectAllowed = 'move';
-        try{ e.dataTransfer.setData('text/plain', String(dragSrc)); }catch(_){ }
-      });
-      box.addEventListener('dragend', () => {
-        box.classList.remove('dragging');
-        cal.querySelectorAll('.temabox').forEach(b=>b.classList.remove('dragover'));
-      });
-      box.addEventListener('dragover', e => { e.preventDefault(); e.dataTransfer.dropEffect='move'; box.classList.add('dragover'); });
-      box.addEventListener('dragleave', () => box.classList.remove('dragover'));
-      box.addEventListener('drop', e => {
-        e.preventDefault();
-        const tgt = +box.dataset.pos;
-        if(dragSrc !== null && dragSrc !== tgt){
-          const tmp = temasOrden[dragSrc]; temasOrden[dragSrc] = temasOrden[tgt]; temasOrden[tgt] = tmp;
-          persist();
-          refresh();
-        }
-        dragSrc = null;
-      });
-    });
+    document.getElementById('cal').innerHTML = html;
   }
 
   function pct(h){ return Math.round(h / TOTAL * 100); }
