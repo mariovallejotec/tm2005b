@@ -160,7 +160,7 @@
   @media(max-width:560px){ .tripanel{grid-template-columns:repeat(2,1fr);} }
 
   /* fila compacta con 3 tarjetas que abren modal */
-  .tripanel{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:22px;}
+  .tripanel{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px;}
   .tripanel-card{display:flex;align-items:center;justify-content:center;gap:8px;font-size:13.5px;font-weight:700;color:var(--tec);background:#fff;border:1px solid #d4ded8;border-radius:12px;padding:14px 10px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.04);text-align:center;font-family:inherit;transition:box-shadow .12s,transform .1s;white-space:nowrap;}
   .tripanel-card:hover{box-shadow:0 5px 16px rgba(10,61,44,.14);transform:translateY(-1px);}
 
@@ -624,6 +624,7 @@
   // ---- Pendientes (checkbox + responsable) ----
   const PEND_KEY = 'tm2005b_pendientes';
   const PENDIENTES = [
+    {id:'p5', quien:'Ambos', txt:'⚠️ Encontrar socio formador para el concierto. ⚠️'},
     {id:'p2', quien:'Mario', txt:'Preparar los 2 esqueletos de Mario.'},
     {id:'p3', quien:'Enrique', txt:'Preparar los 2 esqueletos de Enrique.'},
     {id:'p4', quien:'Enrique', txt:'Contactar a Ear Candy para ver la posibilidad de que den la clase de JUCE/plugins.'}
