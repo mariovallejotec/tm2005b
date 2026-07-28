@@ -308,8 +308,6 @@
   <div class="acc open">
     <div class="acc-head"><h2>Calendario por semanas</h2><span class="chev">▶</span></div>
     <div class="acc-body">
-      <div class="bulkbar" id="bulkbar"></div>
-      <div class="draghint">Arrastra el recuadro del tema de una sesión a otra y se intercambian. El día y quién la imparte no se mueven.</div>
       <div id="cal"></div>
     </div>
   </div>
@@ -486,7 +484,7 @@
     localStorage.setItem(NJ_ULTIMA_KEY, notasUltima);
     if(USE_FB && fbRef) fbRef.set({asignaciones: saved, temas: temasOrden, pendientes: pendEstado, notasJunta: notasJunta, notasUltima: notasUltima});
   }
-  function refresh(){ renderBulk(); renderCal(); updateBalance(); }
+  function refresh(){ renderCal(); updateBalance(); }
 
   function dayCard(p, connColor){
     const d    = ALLDAYS[p];
@@ -560,60 +558,23 @@
     });
   }
 
-  // estado del día de la semana a lo largo de las 5 semanas
-  function bulkState(wd){
-    const ds = ALLDAYS.filter(d => d.wd===wd);
-    let m=0, e=0;
-    ds.forEach(d => { if(saved[d.id]==='mario') m++; else if(saved[d.id]==='enrique') e++; });
-    return {m, e, total:ds.length, none:ds.length-m-e};
-  }
-  function bulkCls(person, st){
-    const cnt   = person==='mario' ? st.m : st.e;
-    const other = person==='mario' ? st.e : st.m;
-    if(cnt===0)        return '';
-    if(cnt===st.total) return ' on';
-    if(cnt>=other)     return ' on partial';
-    return ' minor';
-  }
-  function renderBulk(){
-    const cols = WEEKDAYS.map(x => {
-      const st = bulkState(x.wd);
-      const title = 'Mario '+st.m+' / Enrique '+st.e + (st.none ? ' / sin asignar '+st.none : '') + ' (de '+st.total+' semanas)';
-      return '<div class="bulkcol"><div class="bl">'+x.lbl+'<div class="blmeta">'+x.meta+'</div></div>'
-        + '<div class="bbtns">'
-        +   '<button class="pbtn mario'+bulkCls('mario',st)+'" title="'+title+'" onclick="assignDay(\''+x.wd+'\',\'mario\')">Mario</button>'
-        +   '<button class="pbtn enrique'+bulkCls('enrique',st)+'" title="'+title+'" onclick="assignDay(\''+x.wd+'\',\'enrique\')">Enrique</button>'
-        + '</div></div>';
-    }).join('');
-    document.getElementById('bulkbar').innerHTML =
-      '<div class="bulkhint">Asigna un día completo (las 5 semanas) a Mario o Enrique; la marca queda fija. <b>Sólido</b> = todo el día es de esa persona · <b>rayado</b> = mayoría con alguna excepción · <b>rayita</b> = sólo alguna clase suelta. Ajusta clases con el selector de cada tarjeta.</div>'
-      + cols
-      + '<button class="pbtn bulkclear" onclick="clearAll()">Limpiar todo</button>';
-  }
-
   function pct(h){ return Math.round(h / TOTAL * 100); }
   function updateBalance(){
+    // el balance ahora se calcula del quién fijo de cada sesión (TEMAS_DEFAULT), no de clics guardados.
     let m = 0, r = 0;
-    ALLDAYS.forEach(d => { if(saved[d.id]==='mario') m += d.h; else if(saved[d.id]==='enrique') r += d.h; });
-    const none = TOTAL - m - r;
+    ALLDAYS.forEach((d, p) => {
+      const tb = TEMAS_DEFAULT[temasOrden[p]];
+      if((tb.quien||'mario')==='mario') m += d.h; else r += d.h;
+    });
     document.getElementById('segM').style.width = (m/TOTAL*100)+'%';
     document.getElementById('segR').style.width = (r/TOTAL*100)+'%';
-    document.getElementById('segN').style.width = (none/TOTAL*100)+'%';
+    document.getElementById('segN').style.width = '0%';
     document.getElementById('segM').textContent = m ? 'Mario '+pct(m)+'%' : '';
     document.getElementById('segR').textContent = r ? 'Enrique '+pct(r)+'%' : '';
-    document.getElementById('segN').textContent = none ? 'sin asignar' : '';
+    document.getElementById('segN').textContent = '';
     document.getElementById('lblM').textContent = 'Mario: '+m+' h ('+pct(m)+'%)';
     document.getElementById('lblR').textContent = 'Enrique: '+r+' h ('+pct(r)+'%)';
-    document.getElementById('lblN').textContent = 'Sin asignar: '+none+' h';
-  }
-
-  function assignDay(wd, who){
-    ALLDAYS.filter(d => d.wd===wd).forEach(d => saved[d.id]=who);
-    persist(); refresh();
-  }
-  function clearAll(){
-    Object.keys(saved).forEach(k => delete saved[k]);
-    persist(); refresh();
+    document.getElementById('lblN').textContent = '';
   }
 
   // acordeones (todos menos el fijo): solo uno abierto a la vez
